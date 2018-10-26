@@ -12,10 +12,12 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+from datetime import datetime
 import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+from git import repo
 
 # -- Project information -----------------------------------------------------
 
@@ -24,9 +26,12 @@ copyright = '2018, CAcert development team'
 author = 'CAcert development team'
 
 # The short X.Y version
-version = ''
+version = '0.1'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = "{}-git:{} built:{}".format(
+        version,
+        repo.Repo('..').git.describe('--always', '--dirty'),
+        datetime.utcnow().replace(microsecond=0))
 
 
 # -- General configuration ---------------------------------------------------
@@ -40,6 +45,7 @@ release = ''
 # ones.
 extensions = [
     'sphinx.ext.intersphinx',
+    'sphinx.ext.extlinks',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
 ]
@@ -88,6 +94,8 @@ html_theme_options = {
     'sidebartextcolor': '#334d55',
     'sidebarlinkcolor': '#005fa9',
 }
+
+html_title = project + " v" + release
 
 html_logo = os.path.join('images', 'CAcert-logo-colour.svg')
 
@@ -139,7 +147,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'CAcertcodedocumentation.tex', 'CAcert code documentation Documentation',
+    (master_doc, 'CAcertcodedocumentation.tex', 'CAcert code documentation',
      'CAcert development team', 'manual'),
 ]
 
@@ -149,7 +157,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'cacertcodedocumentation', 'CAcert code documentation Documentation',
+    (master_doc, 'cacertcodedocumentation', 'CAcert code documentation',
      [author], 1)
 ]
 
@@ -160,7 +168,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'CAcertcodedocumentation', 'CAcert code documentation Documentation',
+    (master_doc, 'CAcertcodedocumentation', 'CAcert code documentation',
      author, 'CAcertcodedocumentation', 'One line description of project.',
      'Miscellaneous'),
 ]
@@ -195,3 +203,28 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+extlinks = {
+    'wiki': ('https://wiki.cacert.org/%s', 'Wiki '),
+}
+
+
+def cacert_bug(name, rawtext, text, lineno, inliner, options={}, content=[]):
+    try:
+        bugnum = int(text)
+        if bugnum <= 0:
+            raise ValueError
+    except ValueError:
+        msg = inliner.reporter.error(
+            'Bug number must be a number greater than or equal to 1; '
+            '"%s" is invalid.' % text, line=lineno)
+        prb = inliner.problematic(rawtext, rawtext, msg)
+        return [prb], [msg]
+    ref = 'https://bugs.cacert.org/view.php?id=%d' % bugnum
+    node = nodes.reference(rawtext, '#' + utils.unescape(text), refuri=ref,
+                           **options)
+    return [node], []
+
+
+def setup(app):
+    app.add_role('bug', cacert_bug)

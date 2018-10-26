@@ -1,10 +1,10 @@
-.. CAcert code documentation documentation master file, created by
+.. CAcert code documentation master file, created by
    sphinx-quickstart on Fri Oct 26 23:40:43 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to CAcert code documentation's documentation!
-=====================================================
+Welcome to CAcert code documentation
+====================================
 
 This is a work in progress documentation of the CAcert web application source
 code at https://git.cacert.org/gitweb/?p=cacert.git.
