@@ -1,0 +1,587 @@
+.
+├── cgi-bin
+│   └── siteseal.cgi
+├── CommModule
+│   ├── client.pl
+│   ├── commdaemon
+│   ├── commmodule
+│   ├── logclean.sh
+│   ├── readme.txt
+│   ├── serial.conf
+│   ├── server.pl
+│   └── usbclient.pl
+├── includes
+│   ├── about_menu.php
+│   ├── account.php
+│   ├── account_stuff.php
+│   ├── general.php
+│   ├── general_stuff.php
+│   ├── keygen.php
+│   ├── lib
+│   │   ├── account.php
+│   │   ├── check_weak_key.php
+│   │   ├── general.php
+│   │   └── l10n.php
+│   ├── loggedin.php
+│   ├── mysql.php.sample
+│   ├── notary.inc.php
+│   ├── shutdown.php
+│   ├── sponsorinfo.php
+│   └── tverify_stuff.php
+├── LICENSE
+├── locale
+│   ├── cv.c
+│   ├── escape_special_chars.php
+│   └── Makefile
+├── pages
+│   ├── account
+│   │   ├── 0.php
+│   │   ├── 10.php
+│   │   ├── 11.php
+│   │   ├── 12.php
+│   │   ├── 13.php
+│   │   ├── 14.php
+│   │   ├── 15.php
+│   │   ├── 16.php
+│   │   ├── 17.php
+│   │   ├── 18.php
+│   │   ├── 19.php
+│   │   ├── 1.php
+│   │   ├── 20.php
+│   │   ├── 21.php
+│   │   ├── 22.php
+│   │   ├── 23.php
+│   │   ├── 24.php
+│   │   ├── 25.php
+│   │   ├── 26.php
+│   │   ├── 27.php
+│   │   ├── 28.php
+│   │   ├── 29.php
+│   │   ├── 2.php
+│   │   ├── 30.php
+│   │   ├── 31.php
+│   │   ├── 32.php
+│   │   ├── 33.php
+│   │   ├── 34.php
+│   │   ├── 35.php
+│   │   ├── 36.php
+│   │   ├── 37.php
+│   │   ├── 38.php
+│   │   ├── 39.php
+│   │   ├── 3.php
+│   │   ├── 40.php
+│   │   ├── 41.php
+│   │   ├── 42.php
+│   │   ├── 43.php
+│   │   ├── 44.php
+│   │   ├── 45.php
+│   │   ├── 48.php
+│   │   ├── 49.php
+│   │   ├── 4.php
+│   │   ├── 50.php
+│   │   ├── 51.php
+│   │   ├── 52.php
+│   │   ├── 53.php
+│   │   ├── 54.php
+│   │   ├── 55.php
+│   │   ├── 56.php
+│   │   ├── 57.php
+│   │   ├── 58.php
+│   │   ├── 59.php
+│   │   ├── 5.php
+│   │   ├── 6.php
+│   │   ├── 7.php
+│   │   ├── 8.php
+│   │   └── 9.php
+│   ├── advertising
+│   │   ├── 0.php
+│   │   └── 1.php
+│   ├── disputes
+│   │   ├── 0.php
+│   │   ├── 1.php
+│   │   ├── 2.php
+│   │   ├── 4.php
+│   │   ├── 5.php
+│   │   └── 6.php
+│   ├── gpg
+│   │   ├── 0.php
+│   │   ├── 2.php
+│   │   └── 3.php
+│   ├── help
+│   │   ├── 0.php
+│   │   ├── 2.php
+│   │   ├── 3.php
+│   │   ├── 4.php
+│   │   ├── 5.php
+│   │   ├── 6.php
+│   │   ├── 7.php
+│   │   ├── 8.php
+│   │   └── 9.php
+│   ├── index
+│   │   ├── 0.php
+│   │   ├── 10.php
+│   │   ├── 11.php
+│   │   ├── 12.php
+│   │   ├── 13.php
+│   │   ├── 16.php
+│   │   ├── 17.php
+│   │   ├── 18.php
+│   │   ├── 19.php
+│   │   ├── 1.php
+│   │   ├── 21.php
+│   │   ├── 2.php
+│   │   ├── 3.php
+│   │   ├── 47.php
+│   │   ├── 4.php
+│   │   ├── 51.php
+│   │   ├── 52.php
+│   │   ├── 5.php
+│   │   ├── 6.php
+│   │   ├── 7.php
+│   │   └── 8.php
+│   └── wot
+│       ├── 0.php
+│       ├── 10.php
+│       ├── 12.php
+│       ├── 13.php
+│       ├── 15.php
+│       ├── 1.php
+│       ├── 2.php
+│       ├── 3.php
+│       ├── 4.php
+│       ├── 5.php
+│       ├── 6.php
+│       ├── 8.php
+│       └── 9.php
+├── README
+├── scripts
+│   ├── 49de-lt2013-berlin-email.txt
+│   ├── 49de-lt2013-berlin-mail.php.txt
+│   ├── 50de-ate-luebeck-email.txt
+│   ├── 50de-ate-luebeck-mail.php.txt
+│   ├── 51at-ate-graz-email.txt
+│   ├── 51at-ate-graz-mail.php.txt
+│   ├── 52at-ate-wien-email.txt
+│   ├── 52at-ate-wien-mail.php.txt
+│   ├── 53de-ate-amberg-email.txt
+│   ├── 53de-ate-amberg-mail.php.txt
+│   ├── 54at-ate-linz-email.txt
+│   ├── 54at-ate-linz-mail.php.txt
+│   ├── 55de-ate-wiesbaden-email.txt
+│   ├── 55de-ate-wiesbaden-mail.php.txt
+│   ├── 56at-ate-oberwart-email.txt
+│   ├── 56at-ate-oberwart-mail.php.txt
+│   ├── 57at-ate-graz-email.txt
+│   ├── 57at-ate-graz-mail.php.txt
+│   ├── 58at-ate-wien-email.txt
+│   ├── 58at-ate-wien-mail.php.txt
+│   ├── addpoints.php
+│   ├── assurer.php
+│   ├── assurer.txt
+│   ├── cleanthem.pl
+│   ├── clientcerts.php
+│   ├── consistence.php
+│   ├── country.php
+│   ├── cron
+│   │   ├── permissionreview.php
+│   │   ├── refresh_stats.php
+│   │   ├── removedead.php
+│   │   ├── updatesort.php
+│   │   └── warning.php
+│   ├── db_migrations
+│   │   ├── version1.sh
+│   │   ├── version2.sh
+│   │   ├── version3.sh
+│   │   ├── version4.sh
+│   │   └── version5.sh
+│   ├── DumpWeakCerts.pl
+│   ├── findexp3.pl
+│   ├── findnull.pl
+│   ├── gpgcerts.php
+│   ├── gpgcheck3.php
+│   ├── gpgfillmissingemail.php
+│   ├── gpgfillmissingkeyid.php
+│   ├── mailing archive
+│   │   ├── 45au-ate-melbourne-email.txt
+│   │   ├── 45au-ate-melbourne-mail.php.txt
+│   │   ├── 46us-ate-raleigh-email.txt
+│   │   ├── 46us-ate-raleigh-mail.php.txt
+│   │   ├── 47us-fudcon-lawrence-email.txt
+│   │   ├── 47us-fudcon-lawrence-mail.php.txt
+│   │   ├── 48de-ate-kiel-email.txt
+│   │   ├── 48de-ate-kiel-mail.php.txt
+│   │   ├── oa01-allowance.php.txt
+│   │   ├── oa01-allowance.txt
+│   │   ├── oa02-mailingtextCats.txt
+│   │   ├── oa02-mailingtextPointsCats.txt
+│   │   ├── oa02-mailingtextPoints.txt
+│   │   ├── oa02-orgainformation.php.txt
+│   │   ├── thawte_DE.txt
+│   │   ├── thawte_EN.txt
+│   │   ├── thawte_ES.txt
+│   │   ├── thawte_FR.txt
+│   │   ├── thawte_NL.txt
+│   │   └── thawte_RU.txt
+│   ├── mail-weak-keys.php
+│   ├── Makefile
+│   ├── mass-revoke.php
+│   ├── newslettercebit.php
+│   ├── newsletter.php
+│   ├── notify.php
+│   ├── perl_mysql.sample
+│   ├── resetpermissions.php
+│   ├── runclient.c
+│   ├── rungpg.c
+│   ├── runserver.c
+│   ├── scanforexponents.php
+│   ├── send_heartbleed.php
+│   ├── send_policy_cca_20140916.php
+│   ├── send_thawte.php.txt
+│   ├── servercerts.php
+│   └── test.c
+├── stamp
+│   ├── certdet.php
+│   ├── common.php
+│   ├── displogo.php
+│   ├── images
+│   │   └── CAverify.png
+│   ├── index.php
+│   ├── old_showlogo.php.broken
+│   ├── report.php
+│   ├── showlogo.php
+│   └── style.css
+├── tmp
+│   └── Makefile
+├── tverify
+│   ├── favicon.ico
+│   ├── index
+│   │   ├── 0.php
+│   │   └── 1.php
+│   └── index.php
+└── www
+    ├── account.php
+    ├── ac.js
+    ├── ac.php
+    ├── advertising.php
+    ├── alert_hash_collision.php
+    ├── analyse.php
+    ├── api
+    │   ├── ccsr.php
+    │   ├── cemails.php
+    │   ├── edu.php
+    │   └── index.php
+    ├── cap.html.php
+    ├── capnew.php
+    ├── cap.php
+    ├── cats
+    │   └── cats_import.php
+    ├── certs
+    │   ├── cacert.asc
+    │   ├── CAcert_Root_Certificates.msi
+    │   ├── class3.crt
+    │   ├── class3.der
+    │   ├── class3.txt
+    │   ├── root.crt
+    │   ├── root.der
+    │   └── root.txt
+    ├── coap.html.php
+    ├── coapnew.php
+    ├── disputes.php
+    ├── docs
+    │   ├── banner.jpg
+    │   ├── cacert0304.pdf
+    │   ├── cacert_display.pdf
+    │   ├── cacert_display.sxw
+    │   ├── CAcert_Rules.pdf
+    │   ├── CAcert_Rules.sxw
+    │   ├── encryption in the real world.sxi
+    │   ├── flyer.sxw
+    │   ├── incorporation.jpg
+    │   ├── keys.pdf
+    │   └── keys.ps
+    ├── error403.php
+    ├── error404.php
+    ├── favicon.ico
+    ├── gpg.php
+    ├── help.php
+    ├── iistutorial
+    │   ├── image001.jpg
+    │   ├── image002.jpg
+    │   ├── image003.gif
+    │   ├── image004.gif
+    │   ├── image005.gif
+    │   ├── image006.gif
+    │   ├── image007.gif
+    │   ├── image008.gif
+    │   ├── image009.gif
+    │   ├── image010.gif
+    │   ├── image011b.png
+    │   ├── image011.jpg
+    │   ├── image012.gif
+    │   ├── image013.gif
+    │   ├── image014.jpg
+    │   └── image015.gif
+    ├── images
+    │   ├── bit.png
+    │   ├── btn_paynowCC_LG.gif
+    │   ├── btn_subscribeCC_LG.gif
+    │   ├── cacert2.png
+    │   ├── cacert3.png
+    │   ├── cacert4.png
+    │   ├── cacert-draft.png
+    │   ├── CAcert-logo-colour-1000.png
+    │   ├── CAcert-logo-mono-1000.png
+    │   ├── cacert-policy.png
+    │   ├── nlnet.png
+    │   ├── oan.png
+    │   ├── payment2a.png
+    │   ├── payment2.png
+    │   ├── secured.png
+    │   ├── sonance.png
+    │   ├── tunix.png
+    │   └── valid-xhtml11-blue
+    ├── index.php
+    ├── keygenIE.js
+    ├── logos
+    │   ├── animated.gif
+    │   ├── cacert1.png
+    │   ├── cacert-free-certificates2.png
+    │   ├── cacert-free-certificates3.png
+    │   ├── cacert-free-certificates4.png
+    │   ├── cacert-grey2.png
+    │   ├── cacert-grey.png
+    │   ├── CAcert-logo-colour-1000.png
+    │   ├── CAcert-logo-colour.eps
+    │   ├── CAcert-logo-mono-1000.png
+    │   ├── CAcert-logo-mono.eps
+    │   ├── cacert-secured3.png
+    │   ├── cacert-secured4.png
+    │   ├── cacert-secured5.png
+    │   ├── cacert-secured7.png
+    │   ├── cacert-secure-site2.png
+    │   ├── cacert-secure-site.png
+    │   ├── small-ssl-secured-site.png
+    │   └── small-ssl-security.png
+    ├── logos.php
+    ├── news.php
+    ├── policy
+    │   ├── AssurancePolicy.php
+    │   ├── CAcertCommunityAgreement.php
+    │   ├── cacert-draft.png
+    │   ├── CertificationPracticeStatement.php
+    │   ├── DisputeResolutionPolicy.php
+    │   ├── index.php
+    │   ├── NRPDisclaimerAndLicence.php
+    │   ├── OrganisationAssurancePolicy.php
+    │   ├── PolicyOnPolicy.php
+    │   ├── PrivacyPolicy.html
+    │   └── RootDistributionLicense.php
+    ├── rss.php
+    ├── sealgen.php
+    ├── siteimages
+    │   ├── bg_grad.jpg
+    │   ├── bg_nav.jpg
+    │   ├── gblnav_left.gif
+    │   ├── glblnav_selected.gif
+    │   ├── glbnav_background.gif
+    │   ├── glbnav_right.gif
+    │   ├── tl_curve_white.gif
+    │   └── tr_curve_white.gif
+    ├── sqldump.php
+    ├── src-lic.php
+    ├── stats.php
+    ├── styles
+    │   └── default.css
+    ├── ttp.php
+    ├── tverify
+    │   └── seclayer.php
+    ├── utf8_to_ascii
+    │   ├── ChangeLog
+    │   ├── db
+    │   │   ├── x00.php
+    │   │   ├── x01.php
+    │   │   ├── x02.php
+    │   │   ├── x03.php
+    │   │   ├── x04.php
+    │   │   ├── x05.php
+    │   │   ├── x06.php
+    │   │   ├── x07.php
+    │   │   ├── x09.php
+    │   │   ├── x0a.php
+    │   │   ├── x0b.php
+    │   │   ├── x0c.php
+    │   │   ├── x0d.php
+    │   │   ├── x0e.php
+    │   │   ├── x0f.php
+    │   │   ├── x10.php
+    │   │   ├── x11.php
+    │   │   ├── x12.php
+    │   │   ├── x13.php
+    │   │   ├── x14.php
+    │   │   ├── x15.php
+    │   │   ├── x16.php
+    │   │   ├── x17.php
+    │   │   ├── x18.php
+    │   │   ├── x1e.php
+    │   │   ├── x1f.php
+    │   │   ├── x20.php
+    │   │   ├── x21.php
+    │   │   ├── x22.php
+    │   │   ├── x23.php
+    │   │   ├── x24.php
+    │   │   ├── x25.php
+    │   │   ├── x26.php
+    │   │   ├── x27.php
+    │   │   ├── x28.php
+    │   │   ├── x2e.php
+    │   │   ├── x2f.php
+    │   │   ├── x30.php
+    │   │   ├── x31.php
+    │   │   ├── x32.php
+    │   │   ├── x33.php
+    │   │   ├── x4d.php
+    │   │   ├── x4e.php
+    │   │   ├── x4f.php
+    │   │   ├── x50.php
+    │   │   ├── x51.php
+    │   │   ├── x52.php
+    │   │   ├── x53.php
+    │   │   ├── x54.php
+    │   │   ├── x55.php
+    │   │   ├── x56.php
+    │   │   ├── x57.php
+    │   │   ├── x58.php
+    │   │   ├── x59.php
+    │   │   ├── x5a.php
+    │   │   ├── x5b.php
+    │   │   ├── x5c.php
+    │   │   ├── x5d.php
+    │   │   ├── x5e.php
+    │   │   ├── x5f.php
+    │   │   ├── x60.php
+    │   │   ├── x61.php
+    │   │   ├── x62.php
+    │   │   ├── x63.php
+    │   │   ├── x64.php
+    │   │   ├── x65.php
+    │   │   ├── x66.php
+    │   │   ├── x67.php
+    │   │   ├── x68.php
+    │   │   ├── x69.php
+    │   │   ├── x6a.php
+    │   │   ├── x6b.php
+    │   │   ├── x6c.php
+    │   │   ├── x6d.php
+    │   │   ├── x6e.php
+    │   │   ├── x6f.php
+    │   │   ├── x70.php
+    │   │   ├── x71.php
+    │   │   ├── x72.php
+    │   │   ├── x73.php
+    │   │   ├── x74.php
+    │   │   ├── x75.php
+    │   │   ├── x76.php
+    │   │   ├── x77.php
+    │   │   ├── x78.php
+    │   │   ├── x79.php
+    │   │   ├── x7a.php
+    │   │   ├── x7b.php
+    │   │   ├── x7c.php
+    │   │   ├── x7d.php
+    │   │   ├── x7e.php
+    │   │   ├── x7f.php
+    │   │   ├── x80.php
+    │   │   ├── x81.php
+    │   │   ├── x82.php
+    │   │   ├── x83.php
+    │   │   ├── x84.php
+    │   │   ├── x85.php
+    │   │   ├── x86.php
+    │   │   ├── x87.php
+    │   │   ├── x88.php
+    │   │   ├── x89.php
+    │   │   ├── x8a.php
+    │   │   ├── x8b.php
+    │   │   ├── x8c.php
+    │   │   ├── x8d.php
+    │   │   ├── x8e.php
+    │   │   ├── x8f.php
+    │   │   ├── x90.php
+    │   │   ├── x91.php
+    │   │   ├── x92.php
+    │   │   ├── x93.php
+    │   │   ├── x94.php
+    │   │   ├── x95.php
+    │   │   ├── x96.php
+    │   │   ├── x97.php
+    │   │   ├── x98.php
+    │   │   ├── x99.php
+    │   │   ├── x9a.php
+    │   │   ├── x9b.php
+    │   │   ├── x9c.php
+    │   │   ├── x9d.php
+    │   │   ├── x9e.php
+    │   │   ├── x9f.php
+    │   │   ├── xa0.php
+    │   │   ├── xa1.php
+    │   │   ├── xa2.php
+    │   │   ├── xa3.php
+    │   │   ├── xa4.php
+    │   │   ├── xac.php
+    │   │   ├── xad.php
+    │   │   ├── xae.php
+    │   │   ├── xaf.php
+    │   │   ├── xb0.php
+    │   │   ├── xb1.php
+    │   │   ├── xb2.php
+    │   │   ├── xb3.php
+    │   │   ├── xb4.php
+    │   │   ├── xb5.php
+    │   │   ├── xb6.php
+    │   │   ├── xb7.php
+    │   │   ├── xb8.php
+    │   │   ├── xb9.php
+    │   │   ├── xba.php
+    │   │   ├── xbb.php
+    │   │   ├── xbc.php
+    │   │   ├── xbd.php
+    │   │   ├── xbe.php
+    │   │   ├── xbf.php
+    │   │   ├── xc0.php
+    │   │   ├── xc1.php
+    │   │   ├── xc2.php
+    │   │   ├── xc3.php
+    │   │   ├── xc4.php
+    │   │   ├── xc5.php
+    │   │   ├── xc6.php
+    │   │   ├── xc7.php
+    │   │   ├── xc8.php
+    │   │   ├── xc9.php
+    │   │   ├── xca.php
+    │   │   ├── xcb.php
+    │   │   ├── xcc.php
+    │   │   ├── xcd.php
+    │   │   ├── xce.php
+    │   │   ├── xcf.php
+    │   │   ├── xd0.php
+    │   │   ├── xd1.php
+    │   │   ├── xd2.php
+    │   │   ├── xd3.php
+    │   │   ├── xd4.php
+    │   │   ├── xd5.php
+    │   │   ├── xd6.php
+    │   │   ├── xd7.php
+    │   │   ├── xf9.php
+    │   │   ├── xfa.php
+    │   │   ├── xfb.php
+    │   │   ├── xfc.php
+    │   │   ├── xfd.php
+    │   │   ├── xfe.php
+    │   │   └── xff.php
+    │   ├── LICENSE
+    │   ├── README
+    │   └── utf8_to_ascii.php
+    ├── verify.php
+    └── wot.php
+
+36 directories, 548 files

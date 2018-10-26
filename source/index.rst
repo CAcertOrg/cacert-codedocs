@@ -17,6 +17,15 @@ reimplementation.
    :maxdepth: 2
    :caption: Contents:
 
+Filesystem structure
+--------------------
+
+The file system structure as of 2018-10-27 looks like shown below:
+
+.. literalinclude:: structure.txt
+   :language: text
+   :encoding: utf-8
+
 
 
 Indices and tables
