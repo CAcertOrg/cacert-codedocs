@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 sphinx = "*"
 GitPython = "*"
+certifi = "*"
+requests = "*"
 
 [dev-packages]
 

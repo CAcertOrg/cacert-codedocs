@@ -14,10 +14,26 @@
 #
 from datetime import datetime
 import os
+import certifi
+import requests
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
 from git import repo
+from docutils import nodes, utils
+
+try:
+    print('Checking connection to infradocs.cacert.org')
+    requests.head('https://infradocs.cacert.org/')
+    print('Connection to infradocs.cacert.org OK')
+except requests.exceptions.SSLError as err:
+    print('SSL Error. Adding CAcert certificates to Certifi store...')
+    cafile = certifi.where()
+    with open(os.path.join(
+            os.path.dirname(__file__), '..', 'cacert.pem'), 'rb') as infile:
+        cacertca = infile.read()
+    with open(cafile, 'ab') as outfile:
+        outfile.write(cacertca)
 
 # -- Project information -----------------------------------------------------
 
@@ -29,10 +45,8 @@ author = 'CAcert development team'
 version = '0.1'
 # The full version, including alpha/beta/rc tags
 release = "{}-git:{} built:{}".format(
-        version,
-        repo.Repo('..').git.describe('--always', '--dirty'),
-        datetime.utcnow().replace(microsecond=0))
-
+    version, repo.Repo('..').git.describe('--always', '--dirty'),
+    datetime.utcnow().replace(microsecond=0))
 
 # -- General configuration ---------------------------------------------------
 
@@ -197,7 +211,7 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'infradocs': ('https://infradocs.cacert.org', None)}
 
 # -- Options for todo extension ----------------------------------------------
 
