@@ -62,6 +62,9 @@ extensions = [
     'sphinx.ext.extlinks',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
+    'sphinxcontrib.phpdomain',
+    'sphinxcontrib.blockdiag',
+    'sphinxcontrib.seqdiag',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

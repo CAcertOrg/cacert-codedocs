@@ -20,9 +20,12 @@ contribution. The canonical repository is the :cacertgit:`cacert-devel` though.
    :maxdepth: 2
    :caption: Contents:
 
+   general
    directories
    database
+   signer
    building
+   glossary
 
 Filesystem structure
 --------------------
@@ -39,5 +42,4 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

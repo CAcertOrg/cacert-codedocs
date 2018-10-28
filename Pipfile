@@ -8,6 +8,9 @@ sphinx = "*"
 GitPython = "*"
 certifi = "*"
 requests = "*"
+sphinxcontrib-phpdomain = "*"
+sphinxcontrib-blockdiag = "*"
+sphinxcontrib-seqdiag = "*"
 
 [dev-packages]
 
