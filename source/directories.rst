@@ -114,6 +114,9 @@ This directory contains the CommModule that is implemented in Perl:
   be performed if a certificate has been revoked. The NUL request needs only
   to be sent if no other request has been sent.
 
+  The script uses a lot of temporary files instead of piping input and
+  output to and from external commands.
+
   .. todo:: describe more in-depth what each of the main loop steps does
 
 - :file:`commdaemon` a script to run :ref:`client.pl <commmodule-client-pl>`

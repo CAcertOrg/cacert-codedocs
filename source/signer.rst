@@ -2,8 +2,9 @@
 The Signer Protocol
 ===================
 
-Communication with the signer is performed via a serial connection. That has
-to be established by the client before speaking the protocol defined here.
+Communication with the signer is performed via a serial connection. That
+connection has to be established by the client before speaking the protocol
+defined here.
 
 .. _signer-request-data-format:
 
@@ -38,18 +39,18 @@ structure. The content of bits 3-8 are protocol action specific.
 
 .. table:: general request header format
 
-   ==== =============================================================
+   ==== ===========================
    Byte Value
-   ==== =============================================================
+   ==== ===========================
    0    Version (``0x01``)
    1    Action
-   2    System (``0x01`` for :ref:`client.pl <commmodule-client-pl>`)
+   2    System (used crypto system)
    3    8 bits root
    4    8 bits configuration
    5    8 bits parameter
    6-7  16 bits parameter
    8    8 bits parameter
-   ==== =============================================================
+   ==== ===========================
 
 .. _signer-nul-request-format:
 
@@ -61,18 +62,18 @@ NUL requests are sent at the end of each iteration in
 
 .. table:: NUL request header format
 
-   ==== =========================================================
+   ==== ==================
    Byte Value
-   ==== =========================================================
+   ==== ==================
    0    Version (``0x01``)
-   1    Action ``0x00``
-   2    System (``0x01`` for :ref:`client.pl <commmodule-client-pl>`)
+   1    Action (``0x00``)
+   2    System (``0x00``)
    3    ``0x00``
    4    ``0x00``
    5    ``0x00``
    6-7  ``0x0000``
    8    ``0x00``
-   ==== =========================================================
+   ==== ==================
 
 **NUL Request Payload:**
 
@@ -89,20 +90,18 @@ certificate.
 
 .. table:: X.509 certificate signing request header format
 
-   ==== =========================================================
+   ==== ===================================================================
    Byte Value
-   ==== =========================================================
-   0    Version (0x01)
-   1    Action 0x01
-   2    System (0x01 for :ref:`client.pl <commmodule-client-pl>`)
-   3    Root
+   ==== ===================================================================
+   0    Version (``0x01``)
+   1    Action (``0x01``)
+   2    System (``0x01`` for X.509)
+   3    Root (see table :ref:`table-cert-roots`)
    4    Profile (see table :ref:`table-cert-profiles`)
    5    Message Digest Id (see table :ref:`table-md-ids`)
    6-7  Days in big-endian format
-   8    Key type (``0x01`` for 'NS', ``0x00`` for others)
-   ==== =========================================================
-
-.. todo:: describe which root is identified by which root id
+   8    Key type [#unused-server]_
+   ==== ===================================================================
 
 The key type is stored in the column *keytype* of the certificate request
 table which is one of
@@ -112,14 +111,39 @@ table which is one of
 - *orgdomaincerts*
 - *orgemailcerts*
 
-.. todo:: describe what 'NS' means for key type
-
-
 **X.509 Signing Request Payload:**
 
-- "$content"
-- "$SAN"
-- "$subject"
+- PEM encoded PKCS#10 / :rfc:`2986` certifcate signing request or SPKAC
+  (Netscape) signed public key and challenge (i.e. generated from a
+  `\<keygen\> HTML form element <keygen>`_)
+- comma separated list of SubjectAlternative names in a format that is
+  accepted by openssl configuration file directive ``subjectAltName`` (see
+  https://www.openssl.org/docs/man1.0.2/apps/x509v3_config.html#Subject-Alternative-Name)
+- The requested subject DN in openssl format (parts separated by ``/``)
+
+.. _keygen: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/keygen
+
+.. _table-cert-roots:
+
+.. table:: CA root certificate identifiers
+
+   == =================================================
+   Id CA root
+   == =================================================
+   0  CAcert root (aka CAcert class 1 root)
+   1  CAcert class3
+   2  CAcert class3s
+   x  root{}
+   == =================================================
+
+.. note::
+
+   The CA root identifier is retrieved from the database by
+   :ref:`client.pl <commmodule-client-pl>` the value that is found there is
+   decremented by 1 before it is sent to the server.
+
+   The server in :ref:`server.pl <commmodule-server-pl>` restricts the allowed
+   root id in its ``CheckSystem`` function.
 
 .. _table-cert-profiles:
 
@@ -130,7 +154,7 @@ table which is one of
    == ======================
    0  Client (personal)
    1  Client (Organization)
-   2  Client (Codesigning)
+   2  Client (Code signing)
    3  Client (Machine)
    4  Client (ADS)
    5  Server (personal)
@@ -162,8 +186,61 @@ table which is one of
    10 SHA-512
    == ==========
 
+Format of OpenPGP key signing requests
+--------------------------------------
 
-.. todo:: describe other request types
+OpenPGP key signing requests are sent in
+:ref:`client.pl <commmodule-client-pl>`'s main loop for each requested
+OpenPGP key.
+
+.. table:: OpenPGP key signing request header format
+
+   ==== =============================
+   Byte Value
+   ==== =============================
+   0    Version (``0x01``)
+   1    Action (``0x01``)
+   2    System (``0x02`` for OpenPGP)
+   3    ``0x00``
+   4    ``0x00``
+   5    ``0x02`` [#unused-server]_
+   6-7  366 encoded as ``0x016e``
+   8    ``0x00``
+   ==== =============================
+
+**OpenPGP Signing Request Payload:**
+
+- OpenPGP public keyring in binary format (see :rfc:`4880`)
+- ""
+- ""
+
+.. [#unused-server] the field is unused in
+   :ref:`server.pl <commmodule-server-pl>`
+
+Format of X.509 certificate revocation requests
+-----------------------------------------------
+
+.. Request($ver, 2, 1, $row{'rootcert'} - 1, 0, 0, 365, 0, $content, "", $revokehash);
+
+   ==== ===========================
+   Byte Value
+   ==== ===========================
+   0    Version (``0x01``)
+   1    Action (``0x02``)
+   2    System (``0x01`` for X.509)
+   3    Root
+   4    ``0x00``
+   5    ``0x00``
+   6-7  365 encoded as ``0x016d``
+   8    ``0x00``
+   ==== ===========================
+
+**X.509 Certificate Revocation Request Payload:**
+
+- PEM encoded certificate data of the certificate to be revoked
+- ""
+- hexadecimal encoded SHA-1 hash of the CRL known CRL file of the requested
+  CA Root (header byte 3)
 
 .. _signer-response-data-format:
 
@@ -219,4 +296,3 @@ Send data
 
 If anything different is received there was a protocol error and no further
 messages should be sent over the serial connection.
-
