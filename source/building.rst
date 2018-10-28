@@ -10,8 +10,7 @@ Getting the documentation source
 --------------------------------
 
 The documentation is available from the git repository cacert-codedocs on
-git.cacert.org. You can browse the `repository
-<http://git.cacert.org/gitweb/?p=cacert-codedocs.git;a=summary>`_ via gitweb.
+git.cacert.org. You can browse the :cacertgit:`cacert-codedocs` via gitweb.
 
 You can clone the repository anonymously by executing::
 

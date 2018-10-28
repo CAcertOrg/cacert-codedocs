@@ -220,8 +220,9 @@ todo_include_todos = True
 
 extlinks = {
     'wiki': ('https://wiki.cacert.org/%s', 'Wiki '),
+    'cacertgit': ('https://git.cacert.org/gitweb/?p=%s.git', 'CAcert Git repository '),
+    'github': ('https://github.com/CAcertOrg/%s', 'Github repository '),
 }
-
 
 def cacert_bug(name, rawtext, text, lineno, inliner, options={}, content=[]):
     try:

@@ -7,11 +7,14 @@ CAcert code documentation
 =========================
 
 This is a work in progress documentation of the CAcert web application source
-code at https://git.cacert.org/gitweb/?p=cacert.git.
+code in the `release` branch of the :cacertgit:`cacert-devel`.
 
 The goal is to document the existing code base to give insight into its
 functionality and to support writing a specification for a potential
 reimplementation.
+
+The code repository is mirrored to the :github:`cacert-devel` to encourage
+contribution. The canonical repository is the :cacertgit:`cacert-devel` though.
 
 .. toctree::
    :maxdepth: 2

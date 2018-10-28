@@ -193,7 +193,8 @@
 │   │   ├── version2.sh
 │   │   ├── version3.sh
 │   │   ├── version4.sh
-│   │   └── version5.sh
+│   │   ├── version5.sh
+│   │   └── version6.sh
 │   ├── DumpWeakCerts.pl
 │   ├── findexp3.pl
 │   ├── findnull.pl
@@ -365,17 +366,36 @@
     ├── logos.php
     ├── news.php
     ├── policy
+    │   ├── AssurancePolicy.html
     │   ├── AssurancePolicy.php
+    │   ├── CAcertCommunityAgreement.html
     │   ├── CAcertCommunityAgreement.php
-    │   ├── cacert-draft.png
+    │   ├── CertificationPracticeStatement.html
     │   ├── CertificationPracticeStatement.php
+    │   ├── ConfigurationControlSpecification.html
+    │   ├── DisputeResolutionPolicy.html
     │   ├── DisputeResolutionPolicy.php
+    │   ├── images
+    │   │   ├── cacert-draft.png
+    │   │   ├── cacert-policy.png
+    │   │   ├── valid-html401-blue.png
+    │   │   ├── valid-html50-blue.png
+    │   │   └── valid-xhtml11-blue.png
     │   ├── index.php
-    │   ├── NRPDisclaimerAndLicence.php
+    │   ├── OrganisationAssurancePolicy_Australia.html
+    │   ├── OrganisationAssurancePolicy_Europe.html
+    │   ├── OrganisationAssurancePolicy_Germany.html
+    │   ├── OrganisationAssurancePolicy.html
     │   ├── OrganisationAssurancePolicy.php
+    │   ├── PolicyOnJuniorAssurersMembers.html
+    │   ├── PolicyOnPolicy.html
     │   ├── PolicyOnPolicy.php
     │   ├── PrivacyPolicy.html
-    │   └── RootDistributionLicense.php
+    │   ├── PrivacyPolicy.php
+    │   ├── RootDistributionLicense.html
+    │   ├── RootDistributionLicense.php
+    │   ├── SecurityPolicy.html
+    │   └── TTPAssistedAssurancePolicy.html
     ├── rss.php
     ├── sealgen.php
     ├── siteimages
@@ -584,4 +604,4 @@
     ├── verify.php
     └── wot.php
 
-36 directories, 548 files
+37 directories, 567 files
