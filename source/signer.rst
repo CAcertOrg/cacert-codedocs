@@ -11,7 +11,7 @@ defined here.
 Signer request data format specification
 ========================================
 
-Protocol data is encoded with the following format:
+Protocol request data is encoded in the following format:
 
 .. table:: signer request message format
 
@@ -31,11 +31,12 @@ Protocol data is encoded with the following format:
 Due to the length encoding in 3 bytes the messages can have a maximum length
 of 8\ :sup:`3` = 2\ :sup:`24` Bytes which is around 16 MiB.
 
-General header format
----------------------
+General request header format
+-----------------------------
 
-Every protocol header (bytes 3-12 of protocol message) follows the same 8 byte
-structure. The content of bits 3-8 are protocol action specific.
+Every protocol request header (bytes 3-12 of protocol request message) follows
+the same 9 byte structure. The content of bytes 3-8 are protocol action
+specific.
 
 .. table:: general request header format
 
@@ -54,7 +55,7 @@ structure. The content of bits 3-8 are protocol action specific.
 
 .. _signer-nul-request-format:
 
-Format of NUL Requests
+Format of NUL requests
 ----------------------
 
 NUL requests are sent at the end of each iteration in
@@ -80,6 +81,14 @@ NUL requests are sent at the end of each iteration in
 - GMT timestamp in %m%d%H%M%Y.%S format
 - ""
 - ""
+
+.. note::
+
+   The timestamp sent with the NUL request is used to create a
+   script to synchronize the time on the signer using :program:`date` and
+   :program:`hwclock`.
+
+.. _signer-x509-request-format:
 
 Format of X.509 signing request messages
 ----------------------------------------
@@ -186,10 +195,12 @@ table which is one of
    10 SHA-512
    == ==========
 
-Format of OpenPGP key signing requests
---------------------------------------
+.. _signer-openpgp-request-format:
 
-OpenPGP key signing requests are sent in
+Format of OpenPGP key signing request messages
+----------------------------------------------
+
+OpenPGP key signing request messages are sent in
 :ref:`client.pl <commmodule-client-pl>`'s main loop for each requested
 OpenPGP key.
 
@@ -217,10 +228,14 @@ OpenPGP key.
 .. [#unused-server] the field is unused in
    :ref:`server.pl <commmodule-server-pl>`
 
-Format of X.509 certificate revocation requests
------------------------------------------------
+.. _signer-csr-request-format:
 
-.. Request($ver, 2, 1, $row{'rootcert'} - 1, 0, 0, 365, 0, $content, "", $revokehash);
+Format of X.509 certificate revocation request messages
+-------------------------------------------------------
+
+X.509 certificate revocation request messages are sent in
+:ref:`client.pl <commmodule-client-pl>`'s main loop for each requested
+X.509 certificate revocation.
 
    ==== ===========================
    Byte Value
@@ -247,7 +262,148 @@ Format of X.509 certificate revocation requests
 Signer response data format specification
 =========================================
 
-.. todo:: describe signer response
+Protocol response data is encoded in the following format:
+
+.. table:: signer response message format:
+
+   ======= =======================================================
+   Byte    Data
+   ======= =======================================================
+   0-2     length of header + data in network byte order
+   3-5     length of header network byte order [#diff-to-request]_
+   6-9     header data
+   10-12   length of payload data 1 in network byte order
+   13-N    payload data 1
+   N+1-N+3 length of payload data 2 network byte order
+   N+4-M   payload data 2
+   M+1-M+3 length of payload data 3 network byte order
+   M+4-End payload data 3
+   ======= =======================================================
+
+.. [#diff-to-request] this is a difference to the
+   :ref:`signer-request-data-format` that does not add the
+   length of the header
+
+General response header format
+------------------------------
+
+Every protocol response header (bytes 6-9 of protocol response message)
+follows the same 4 byte structure. The content of bytes 3 and 4 are not used
+yet.
+
+.. table:: general response header format
+
+   ==== ==================
+   Byte Value
+   ==== ==================
+   0    Version (``0x01``)
+   1    Action
+   3    ``0x00`` unused
+   4    ``0x00`` unused
+   ==== ==================
+
+.. _signer-nul-response-format:
+
+Format of NUL Responses
+-----------------------
+
+NUL responses are sent in response to
+:ref:`NUL requests <signer-nul-request-format>`.
+
+.. table:: NUL response header format
+
+   ==== ==================
+   Byte Value
+   ==== ==================
+   0    Version (``0x01``)
+   1    Action (``0x00``)
+   3    ``0x00`` unused
+   4    ``0x00`` unused
+   ==== ==================
+
+**NUL Response Payload:**
+
+- ""
+- ""
+- ""
+
+Format of X.509 certificate response messages
+---------------------------------------------
+
+X.509 certificate response messages are sent in response to
+:ref:`X.509 certificate signing request messages <signer-x509-request-format>`.
+
+.. table:: X.509 certificate response header format
+
+   ==== ==================
+   Byte Value
+   ==== ==================
+   0    Version (``0x01``)
+   1    Action (``0x01``)
+   3    ``0x00`` unused
+   4    ``0x00`` unused
+   ==== ==================
+
+**X.509 certificate response payload:**
+
+- PEM encoded X.509 certificate
+- ""
+- ""
+
+.. _signer-openpgp-response-format:
+
+Format of OpenPGP key signature response messages
+-------------------------------------------------
+
+OpenPGP key signature response messages are sent in response to
+:ref:`OpenPGP key signing request messages <signer-openpgp-request-format>`.
+
+.. table:: OpenPGP key signature response header format
+
+   ==== ==================
+   Byte Value
+   ==== ==================
+   0    Version (``0x01``)
+   1    Action (``0x02``)
+   3    ``0x00`` unused
+   4    ``0x00`` unused
+   ==== ==================
+
+**OpenPGP key signature response payload:**
+
+- ASCII armored PGP public key block
+- ""
+- ""
+
+Format of X.509 certificate revocation response messages
+--------------------------------------------------------
+
+X.509 certificate revocation response messages are sent in response to
+:ref:`X.509 certificate revocation request messages
+<signer-csr-request-format>`.
+
+.. table:: X.509 certificate revocation response header format
+
+   ==== =====================================
+   Byte Value
+   ==== =====================================
+   0    Version (``0x01``)
+   1    Action (``0x02``) [#overlap-openpgp]_
+   3    ``0x00`` unused
+   4    ``0x00`` unused
+   ==== =====================================
+
+.. [#overlap-openpgp] this response type uses the same action byte as the
+   :ref:`OpenPGP key signature response message <signer-openpgp-response-format>`
+
+**X.509 certificate revocation response payload:**
+
+- CRL diff in :program:`xdelta` format or "" if the original CRL specified
+  by the SHA-1 hash in the third payload field of the request is not
+  available
+- ""
+- ""
+
 
 Protocol messages
 =================
@@ -271,6 +427,8 @@ Handshake
 If anything different is received there was a protocol error and no further
 messages should be sent over the serial connection.
 
+.. _signer-message-senddata:
+
 Send data
 ---------
 
@@ -286,9 +444,10 @@ Send data
 
 .. seqdiag::
 
-   seqdiag with_retry {
+   seqdiag request_with_retry {
      client  -> client [label = "xor $data"];
      client  -> server [label = "$data . $xor . \"rie4Ech7\""];
+     server  -> server [label = "detect corruption"];
      client <-- server [label = "0x11"];
      client  -> server [label = "$data . $xor . \"rie4Ech7\""];
      client <-- server [label = "0x10"];
@@ -296,3 +455,35 @@ Send data
 
 If anything different is received there was a protocol error and no further
 messages should be sent over the serial connection.
+
+Receive data
+------------
+
+:Preconditions:
+  client :ref:`sent data <signer-message-senddata>`
+
+#. client waits for a response (with a 120 second timeout)
+#. server builds byte wise xor of all data bytes in 1 byte $xor
+#. server sends ``0x02`` to start transmission
+#. client sends ``0x10`` to confirm receipt (server timeout 1 second)
+#. server sends concatenated $data string + xor-Byte + "rie4Ech7"
+#. client reads data in 100 byte segments (5 second timeout)
+#. client sends ``0x11`` in case of corrupted data and retries reading
+#. client sends ``0x10`` if successful
+#. server waits for response for 5 seconds
+#. server sends concatenated $data string + xor-Byte + "rie4Ech7" if client
+   response is ``0x11``
+
+.. seqdiag::
+
+   seqdiag response_with_retry {
+      client  -> server [label = "wait"];
+      server  -> server [label = "xor $data"];
+      client <-  server [label = "0x02"];
+      client --> server [label = "0x10"];
+      client <-  server [label = "$data . $xor . \"rie4Ech7\""];
+      client  -> client [label = "detect corruption"];
+      client --> server [label = "0x11"];
+      client <-  server [label = "$data . $xor . \"rie4Ech7\""];
+      client --> server [label = "0x10"];
+   }
