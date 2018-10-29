@@ -298,8 +298,8 @@ yet.
    ==== ==================
    0    Version (``0x01``)
    1    Action
+   2    ``0x00`` unused
    3    ``0x00`` unused
-   4    ``0x00`` unused
    ==== ==================
 
 .. _signer-nul-response-format:
@@ -317,8 +317,8 @@ NUL responses are sent in response to
    ==== ==================
    0    Version (``0x01``)
    1    Action (``0x00``)
+   2    ``0x00`` unused
    3    ``0x00`` unused
-   4    ``0x00`` unused
    ==== ==================
 
 **NUL Response Payload:**
@@ -340,8 +340,8 @@ X.509 certificate response messages are sent in response to
    ==== ==================
    0    Version (``0x01``)
    1    Action (``0x01``)
+   2    ``0x00`` unused
    3    ``0x00`` unused
-   4    ``0x00`` unused
    ==== ==================
 
 **X.509 certificate response payload:**
@@ -365,8 +365,8 @@ OpenPGP key signature response messages are sent in response to
    ==== ==================
    0    Version (``0x01``)
    1    Action (``0x02``)
+   2    ``0x00`` unused
    3    ``0x00`` unused
-   4    ``0x00`` unused
    ==== ==================
 
 **OpenPGP key signature response payload:**
@@ -389,8 +389,8 @@ X.509 certificate revocation response messages are sent in response to
    ==== =====================================
    0    Version (``0x01``)
    1    Action (``0x02``) [#overlap-openpgp]_
+   2    ``0x00`` unused
    3    ``0x00`` unused
-   4    ``0x00`` unused
    ==== =====================================
 
 .. [#overlap-openpgp] this response type uses the same action byte as the
