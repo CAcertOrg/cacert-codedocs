@@ -16,10 +16,20 @@ You can clone the repository anonymously by executing::
 
    git clone git://git.cacert.org/cacert-codedocs.git
 
-If you want to contribute to the documentation please ask git-admin@cacert.org
-to setup a user in the group git-doc on git.cacert.org for you. You will have
-to provide an SSH public key (either RSA with at least 2048 Bits modulus or an
-ECDSA or ED25519 key with similar strength) with your request.
+There is a github mirror of this repository available at
+
+   https://github.com/CAcertOrg/cacert-codedocs
+
+You make fork from that clone and contribute your changes via pull requests.
+Merged pull requests will be applied to the repository at git.cacert.org.
+
+If you just want to contribute to the documentation you are encouraged to use
+Github and pull requests.
+
+Please ask git-admin@cacert.org to setup a user in the group git-doc on
+git.cacert.org for you to get push access to the git.cacert.org repository.
+You will have to provide an SSH public key (either RSA with at least 2048 Bits
+modulus or an ECDSA or ED25519 key with similar strength) with your request.
 
 If you have a user in the git-doc group you can clone the repository by
 executing::
@@ -56,6 +66,11 @@ Python 3 installation instructions can be found on the `Python website`_.
       pipenv run make html
 
    .. note::
+
+      You may need to add :file:`~/.local/bin` to the :envvar:`$PATH`
+      environment variable before you will be able to run :program:`pipenv`.
+      You can do this by adding ``export PATH=~/.local/bin:$PATH`` to your
+      shell initialization file like :file:`~/.bashrc` or :file:`~/.zshrc`.
 
       The above commands should be run from the root directory of a git clone
       of the cacert-codedocs git repository. The result of the :program:`make`
