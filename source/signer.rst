@@ -19,9 +19,10 @@ Protocol request data is encoded in the following format:
    Byte    Data
    ======= ==============================================================
    0-2     length of header + data in network byte order
-   3-12    action specific header
-   13-15   length of first action specific content in network byte order
-   15-N    fist action specific content string
+   3-5     length of header network byte order [#diff-to-request]_
+   6-14    action specific header
+   15-17   length of first action specific content in network byte order
+   18-N    fist action specific content string
    N+1-N+3 length of second action specific content in network byte order
    N+4-M   second action specific content string
    M+1-M+3 lenght of third action specific content in network byte order
@@ -279,10 +280,6 @@ Protocol response data is encoded in the following format:
    M+1-M+3 length of payload data 3 network byte order
    M+4-End payload data 3
    ======= =======================================================
-
-.. [#diff-to-request] this is a difference to the
-   :ref:`signer-request-data-format` that does not add the
-   length of the header
 
 General response header format
 ------------------------------
