@@ -19,7 +19,7 @@ Protocol request data is encoded in the following format:
    Byte    Data
    ======= ==============================================================
    0-2     length of header + data in network byte order
-   3-5     length of header network byte order [#diff-to-request]_
+   3-5     length of header network byte order
    6-14    action specific header
    15-17   length of first action specific content in network byte order
    18-N    fist action specific content string
@@ -271,7 +271,7 @@ Protocol response data is encoded in the following format:
    Byte    Data
    ======= =======================================================
    0-2     length of header + data in network byte order
-   3-5     length of header network byte order [#diff-to-request]_
+   3-5     length of header network byte order
    6-9     header data
    10-12   length of payload data 1 in network byte order
    13-N    payload data 1
