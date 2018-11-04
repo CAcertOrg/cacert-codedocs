@@ -193,6 +193,42 @@ This directory contains the CommModule that is implemented in Perl:
 Directory :file:`includes`
 ==============================
 
+.. _includes-.cvsignore:
+
+- :file:`.cvsignore` includes the parameters for cvs, which files to ignore by versioning
+
+.. _includes-.directory:
+
+- :file:`.gitignore` includes the parameters for git, which files to ignore by versioning
+
+.. _includes-about_menu.php:
+
+- :file:`about_menu.php` is a part (<div>) of a PHP-Page
+
+  - this file is used by:
+
+    - :file:`includes/account_stuff.php`
+    - :file:`includes/general_stuff.php`
+
+  - it uses:
+
+    - ---
+
+.. _includes-account.php:
+
+- :file:`account.php`
+
+  - this file is used by:
+
+    - :file:`CommModule/client.pl` as part of a message sent
+    - :file:`CommModule/usbclient.pl` as part of a message sent
+    - :file:`includes/account_stuff.php`
+    - :file:`pages/account/1.php` as a parameter
+
+  - it uses:
+
+    - ---
+
 .. _includes-mysql-php:
 .. _includes-mysql-php-sample:
 
