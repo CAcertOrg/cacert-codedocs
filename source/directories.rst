@@ -21,7 +21,7 @@ Directory :file:`cgi-bin`
 
 The `cgi-bin` directory contains
 
-.. index:: php
+.. index:: PHP
 
 .. _cgi-bin-siteseal-cgi:
 
@@ -32,7 +32,7 @@ The `cgi-bin` directory contains
 
 .. todo: check whether this is linked anywhere or can be removed
 
-.. index:: commmodule
+.. index:: commModule
 .. index:: Perl
 .. index:: bash
 
@@ -189,9 +189,80 @@ This directory contains the CommModule that is implemented in Perl:
   :ref:`client.pl <commmodule-client-pl>` above
 
   .. todo:: remove unused file (usbclient.pl)
+  
+.. index:: includes 
+.. index:: PHP
 
 Directory :file:`includes`
 ==============================
+
+.. _includes-.cvsignore:
+
+.. sourcefile: includes/.cvsignore
+
+- :file:`.cvsignore` includes the parameters for CVS, which files to ignore by versioning
+
+.. _includes-.directory:
+
+.. sourcefile: includes/.gitignore
+
+- :file:`.gitignore` includes the parameters for GIT, which files to ignore by versioning
+
+.. _includes-about_menu.php:
+
+.. sourcefile: includes/about_menu.php
+   :links: http://blog.cacert.org/
+   :links: http://wiki.CAcert.org/
+   :links: www/policy/
+   :links: //wiki.cacert.org/FAQ/Privileges
+   :links: www/index.php?id=47
+   :links: www/logos.php
+   :links: www/stats.php
+   :links: http://blog.CAcert.org/feed/
+   :links: www/index.php?id=7
+   :links: //wiki.cacert.org/Board
+   :links: https://lists.cacert.org/wws
+   :links: www/src-lic.php
+
+- :file:`about_menu.php` is a part (<div>) of a PHP-Page, containing most of the CAcert-related links.   
+
+.. _includes-account_stuff.php:
+
+.. sourcefile: includes/account_stuff.php
+
+- :file:`account_stuff.php`
+
+.. _includes-account.php:
+
+.. sourcefile: includes/account.php
+   :uses: includes/about_menu.php
+   :uses: .... showheader  
+
+- :file:`account.php`
+
+.. _includes-general_stuff.php:
+
+.. sourcefile: includes/general_stuff.php
+
+- :file:`general_stuff.php`
+
+.. _includes-general.php:
+
+.. sourcefile: includes/general.php
+
+- :file:`general.php`
+
+.. _includes-keygen.php:
+
+.. sourcefile: includes/keygen.php
+
+- :file:`keygen.php`
+
+.. _includes-loggedin.php:
+
+.. sourcefile: includes/loggedin.php
+
+- :file:`loggedin.php`
 
 .. _includes-mysql-php:
 .. _includes-mysql-php-sample:
@@ -230,6 +301,109 @@ Directory :file:`includes`
 
   This file is parsed by :ref:`CommModule/client.pl <commmodule-client-pl>`
   format changes might break the CommModule code.
+  
+.. _includes-notary.inc.php:
+
+.. sourcefile: includes/notary.inc.php
+
+- :file:`notary.inc.php`
+
+.. _includes-shutdown.php:
+
+.. sourcefile: includes/shutdown.php
+
+- :file:`shutdown.php`
+
+.. _includes-sponsorinfo.php:
+
+.. sourcefile: includes/sponsorinfo.php
+
+- :file:`sponsorinfo.php`
+
+.. _includes-tverify_stuff.php:
+
+.. sourcefile: includes/tverify_stuff.php
+
+- :file:`tverify_stuff.php`
+
+.. index:: includes/lib
+.. index:: PHP
+
+Directory :file:`includes/lib`
+==============================
+
+.. _includes-lib-account.php:
+
+.. sourcefile: includes/lib/account.php
+
+- :file:`account.php`
+
+.. _includes-lib-check_weak_key.php:
+
+.. sourcefile: includes/lib/check_weak_key.php
+
+- :file:`check_weak_key.php`
+
+.. _includes-lib-general.php:
+
+.. sourcefile: includes/lib/general.php
+
+- :file:`general.php`
+
+.. _includes-lib-l10n.php:
+
+.. sourcefile: includes/lib/l10n.php
+
+- :file:`l10n.php`
+
+.. index:: locale
+
+Directory :file:`locale`
+========================
+
+.. index:: C
+
+.. _locale-cv.c:
+
+.. sourcefile: locale/cv.c
+
+- :file:`cv.c`
+
+.. index:: PHP
+.. _locale-escape_special_chars.php:
+
+.. sourcefile: locale/escape_special_chars.php
+
+- :file:`escape_special_chars.php`
+
+.. index:: bash
+.. _locale-makefile:
+
+.. sourcefile: locale/makefile
+
+- :file:`makefile`
+
+.. index:: pages
+
+Directory :file:`pages`
+=======================
+
+This directory only contains other (sub-) directorys, structured according to specific topics.
+
+.. include:: DIR-pages.rst
+
+.. index:: scripts
+.. index:: PHP
+.. index:: txt
+
+Directory :file:`scripts`
+=========================
+
+.. include:: DIR-scripts.rst
+
+
+.. index:: WWW
+.. index:: PHP
 
 Directory :file:`www`
 =====================
