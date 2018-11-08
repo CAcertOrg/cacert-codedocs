@@ -401,6 +401,130 @@ Directory :file:`scripts`
 
 .. include:: DIR-scripts.rst
 
+Directory :file:`stamp`
+=======================
+
+.. _stamp-certdet.php:
+
+.. sourcefile: stamp/certdet.php
+
+- :file:`certdet.php`
+
+.. _stamp-common.php:
+
+.. sourcefile: stamp/common.php
+
+- :file:`common.php`
+
+.. _stamp-displogo.php:
+
+.. sourcefile: stamp/displogo.php
+
+- :file:`displogo.php`
+
+.. _stamp-.htaccess:
+
+.. sourcefile: stamp/.htaccess
+
+- :file:`.htaccess`
+
+.. _stamp-index.php:
+
+.. sourcefile: stamp/index.php
+
+- :file:`index.php`
+
+.. _stamp-old_showlogo.php.broken:
+
+.. sourcefile: stamp/old_showlogo.php.broken
+
+- :file:`old_showlogo.php.broken`
+
+.. _stamp-report.php:
+
+.. sourcefile: stamp/report.php
+
+- :file:`report.php`
+
+.. _stamp-showlogo.php:
+
+.. sourcefile: stamp/showlogo.php
+
+- :file:`showlogo.php`
+
+.. _stamp-style.css:
+
+.. sourcefile: stamp/style.css
+
+- :file:`style.css`
+
+Directory :file:`stamp/images`
+==============================
+
+.. _stamp-images-CAverify.png:
+
+.. sourcefile: stamp/images/CAverify.png
+
+- :file:`CAverify.png`
+
+Directory :file:`tmp`
+=====================
+
+.. _tmp-Makefile:
+
+.. sourcefile: tmp/Makefile
+
+- :file:`Makefile`
+
+
+
+.. index:: tverify
+
+Directory :file:`tverify`
+=========================
+
+.. _tverify-favicon.ico:
+
+.. sourcefile: tverify/favicon.ico
+
+- :file:`favicon.ico`
+
+.. _tverify-.htaccess:
+
+.. sourcefile: tverify/.htaccess
+
+- :file:`.htaccess`
+
+.. _tverify-index:
+
+.. sourcefile: tverify/index
+
+- :file:`index`
+
+.. _tverify-index.php:
+
+.. sourcefile: tverify/index.php
+
+- :file:`index.php`
+
+
+Directory :file:`tverify/index`
+===============================
+
+.. _tverify-index-0.php:
+
+.. sourcefile: tverify/index/0.php
+
+- :file:`0.php`
+
+.. _tverify-index-1.php:
+
+.. sourcefile: tverify/index/1.php
+
+- :file:`1.php`
+
+
+
 
 .. index:: WWW
 .. index:: PHP
@@ -410,17 +534,19 @@ Directory :file:`www`
 
 This contains the PHP code that is the entry point to the application:
 
-.. _www-sealgen-php:
+.. include:: DIR-www.rst
 
-- :file:`sealgen.php` generates a small site seal image from
-  :ref:`www/images/secured.png <www-images-secured-png>`. This could be
-  replaced with a static image if it is used at all. This is referenced
-  by :ref:`cgi-bin/siteseal.cgi <cgi-bin-siteseal-cgi>`
+.. .. _www-sealgen-php:
+.. 
+.. - :file:`sealgen.php` generates a small site seal image from
+..   :ref:`www/images/secured.png <www-images-secured-png>`. This could be
+..   replaced with a static image if it is used at all. This is referenced
+..   by :ref:`cgi-bin/siteseal.cgi <cgi-bin-siteseal-cgi>`
 
-Directory :file:`www/images`
-============================
-
-.. _www-images-secured-png:
-
-- :file:`secured.png` is a small image used by
-  :ref:`www/sealgen.php <www-sealgen-php>`
+.. Directory :file:`www/images`
+.. ============================
+.. 
+.. .. _www-images-secured-png:
+.. 
+.. - :file:`secured.png` is a small image used by
+..   :ref:`www/sealgen.php <www-sealgen-php>`
