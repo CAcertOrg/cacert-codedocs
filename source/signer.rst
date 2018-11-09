@@ -60,7 +60,7 @@ Format of NUL requests
 ----------------------
 
 NUL requests are sent at the end of each iteration in
-:ref:`client.pl <commmodule-client-pl>`'s main loop.
+:sourcefile:`client.pl <CommModule/client.pl>`'s main loop.
 
 .. table:: NUL request header format
 
@@ -95,7 +95,7 @@ Format of X.509 signing request messages
 ----------------------------------------
 
 X.509 signing request messages are sent in
-:ref:`client.pl <commmodule-client-pl>`'s main loop for each requested
+:sourcefile:`client.pl <CommModule/client.pl>`'s main loop for each requested
 certificate.
 
 .. table:: X.509 certificate signing request header format
@@ -149,11 +149,11 @@ table which is one of
 .. note::
 
    The CA root identifier is retrieved from the database by
-   :ref:`client.pl <commmodule-client-pl>` the value that is found there is
+   :sourcefile:`client.pl <CommModule/client.pl>` the value that is found there is
    decremented by 1 before it is sent to the server.
 
-   The server in :ref:`server.pl <commmodule-server-pl>` restricts the allowed
-   root id in its ``CheckSystem`` function.
+   The server in :sourcefile:`server.pl <CommModule/server.pl>` restricts the
+   allowed root id in its ``CheckSystem`` function.
 
 .. _table-cert-profiles:
 
@@ -178,7 +178,7 @@ table which is one of
 
 .. note::
 
-   :ref:`client.pl <commmodule-client-pl>` supports profiles 0, 1, 2, 4,
+   :sourcefile:`client.pl <CommModule/client.pl>` supports profiles 0, 1, 2, 4,
    5, 6, 8 and 9 only.
 
 .. _table-md-ids:
@@ -202,7 +202,7 @@ Format of OpenPGP key signing request messages
 ----------------------------------------------
 
 OpenPGP key signing request messages are sent in
-:ref:`client.pl <commmodule-client-pl>`'s main loop for each requested
+:sourcefile:`client.pl <CommModule/client.pl>`'s main loop for each requested
 OpenPGP key.
 
 .. table:: OpenPGP key signing request header format
@@ -227,7 +227,7 @@ OpenPGP key.
 - ""
 
 .. [#unused-server] the field is unused in
-   :ref:`server.pl <commmodule-server-pl>`
+   :sourcefile:`server.pl <CommModule/server.pl>`
 
 .. _signer-csr-request-format:
 
@@ -235,7 +235,7 @@ Format of X.509 certificate revocation request messages
 -------------------------------------------------------
 
 X.509 certificate revocation request messages are sent in
-:ref:`client.pl <commmodule-client-pl>`'s main loop for each requested
+:sourcefile:`client.pl <Commmodule/client.pl>`'s main loop for each requested
 X.509 certificate revocation.
 
    ==== ===========================

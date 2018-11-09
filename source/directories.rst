@@ -14,6 +14,17 @@ The root directory contains
 
 .. _GPL: https://www.gnu.org/licenses/old-licenses/gpl-2.0
 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Documentation for subdirectories
+   :name: directorytoc
+
+   DIR-pages
+   DIR-scripts
+   DIR-www
+
+
 .. index:: cgi-bin
 
 Directory :file:`cgi-bin`
@@ -23,14 +34,16 @@ The `cgi-bin` directory contains
 
 .. index:: PHP
 
-.. _cgi-bin-siteseal-cgi:
+.. sourcefile:: cgi-bin/siteseal.cgi
+   :links:
+      www/sealgen.php
 
-- :file:`siteseal.cgi` a PHP CGI script that generates some JavaScript code
-  to invoke :ref:`sealgen.php <www-sealgen-php>`. The configuration on
-  www.cacert.org does not seem to support this script
-  https://www.cacert.org/cgi-bin/siteseal.cgi returns a 403 response.
+   a PHP CGI script that generates some JavaScript code to invoke
+   :sourcefile:`sealgen.php <www/sealgen.php>`. The configuration on
+   www.cacert.org does not seem to support this script
+   https://www.cacert.org/cgi-bin/siteseal.cgi returns a 403 response.
 
-.. todo: check whether this is linked anywhere or can be removed
+   .. todo: check whether this is linked anywhere or can be removed
 
 .. index:: commModule
 .. index:: Perl
@@ -41,290 +54,267 @@ Directory :file:`CommModule`
 
 This directory contains the CommModule that is implemented in Perl:
 
-.. _commmodule-client-pl:
+.. sourcefile:: CommModule/client.pl
+   :uses:
+      includes/mysql.php
 
-- :file:`client.pl` the :doc:`signer protocol <signer>` client, running
-  on the webserver and talking to the server via a serial link.
+   :file:`client.pl` implements the :doc:`signer protocol <signer>` client,
+   running on the webserver and talking to the server via a serial link.
 
-  The style of the Perl code seems a bit inconsistent (mix of uppercase and
-  lowercase function names, usage of brackets). The code uses database polling
-  in a loop. It might be a better idea to use some kind of queueing (Redis,
-  AMQP, ...) to not waste resources when there is nothing to do). Function
-  parameters are not named which makes the code hard to read.
+   The style of the Perl code seems a bit inconsistent (mix of uppercase and
+   lowercase function names, usage of brackets). The code uses database polling
+   in a loop. It might be a better idea to use some kind of queueing (Redis,
+   AMQP, ...) to not waste resources when there is nothing to do). Function
+   parameters are not named which makes the code hard to read.
 
-  The script calls several system binaries that need to be present in
-  compatible versions:
+   The script calls several system binaries that need to be present in
+   compatible versions:
 
-  - :program:`openssl`
-  - :program:`xdelta`
+   - :program:`openssl`
+   - :program:`xdelta`
 
-  The script uses several Perl standard library modules as well as the
-  following third party modules:
+   The script uses several Perl standard library modules as well as the
+   following third party modules:
 
-  .. index:: Perl, thirdparty
+   .. index:: Perl, thirdparty
 
-  - `DBD::mysql <https://metacpan.org/pod/DBD::mysql>`_
-  - `DBI <https://metacpan.org/pod/DBI>`_
-  - `Device::SerialPort <https://metacpan.org/pod/Device::SerialPort>`_
-  - `File::CounterFile <https://metacpan.org/pod/File::CounterFile>`_
+   - `DBD::mysql <https://metacpan.org/pod/DBD::mysql>`_
+   - `DBI <https://metacpan.org/pod/DBI>`_
+   - `Device::SerialPort <https://metacpan.org/pod/Device::SerialPort>`_
+   - `File::CounterFile <https://metacpan.org/pod/File::CounterFile>`_
 
-  The script references several openssl configuration files in the HandleCerts
-  function that are not included in the code repository. There are some
-  openssl configuration files with similar names in
-  https://svn.cacert.org/CAcert/SystemAdministration/signer/
+   The script references several openssl configuration files in the HandleCerts
+   function that are not included in the code repository. There are some
+   openssl configuration files with similar names in
+   https://svn.cacert.org/CAcert/SystemAdministration/signer/
 
-  The database password is parsed from
-  :ref:`includes/mysql.php <includes-mysql-php>` and relies on the
-  exact code that is defined there. Database name, user and host are hardcoded
-  in the DBI->connect call.
+   The database password is parsed from
+   :sourcefile:`includes/mysql.php` and relies on the
+   exact code that is defined there. Database name, user and host are hardcoded
+   in the DBI->connect call.
 
-  The script implements the client side of the signer protocol which is
-  specified in :doc:`signer`.
+   The script implements the client side of the signer protocol which is
+   specified in :doc:`signer`.
 
-  The script performs the following operations:
+   The script performs the following operations:
 
-  - parse password from :file:`includes/mysql.php`
-  - read a list of CRL files and logs their SHA-1 hashes
-  - read :file:`serial.conf`, create a Device::SerialPort instance `$portObj`,
-    sets serial parameters and saves :file:`serial.conf`
-  - run a main loop as long as a file :file:`./client.pl-active` is present.
-    The main loop performs the following tasks
+   - parse password from :sourcefile:`includes/mysql.php`
+   - read a list of CRL files and logs their SHA-1 hashes
+   - read :file:`serial.conf`, create a Device::SerialPort instance `$portObj`,
+     sets serial parameters and saves :file:`serial.conf`
+   - run a main loop as long as a file :file:`./client.pl-active` is present.
+     The main loop performs the following tasks
 
-    - handle pending OpenPGP key signing request via ``HandleGPG()``
-    - handle pending certificate signing requests:
+     - handle pending OpenPGP key signing request via ``HandleGPG()``
+     - handle pending certificate signing requests:
 
-      - personal client certificates via ``HandleCerts(0, 0)``
-      - personal server certificates via ``HandleCerts(0, 1)``
-      - organization client certificates via ``HandleCerts(1, 0)``
-      - organization server certificates via ``HandleCerts(1, 1)``
+       - personal client certificates via ``HandleCerts(0, 0)``
+       - personal server certificates via ``HandleCerts(0, 1)``
+       - organization client certificates via ``HandleCerts(1, 0)``
+       - organization server certificates via ``HandleCerts(1, 1)``
 
-    - handle pending certificate revocation requests
+     - handle pending certificate revocation requests
 
-      - personal client certificates via ``RevokeCerts(0, 0)``
-      - personal server certificates via ``RevokeCerts(0, 1)``
-      - organization client certificates via ``RevokeCerts(1, 0)``
-      - organization server certificates via ``RevokeCerts(1, 1)``
+       - personal client certificates via ``RevokeCerts(0, 0)``
+       - personal server certificates via ``RevokeCerts(0, 1)``
+       - organization client certificates via ``RevokeCerts(1, 0)``
+       - organization server certificates via ``RevokeCerts(1, 1)``
 
-    - refresh :term:`CRLs <CRL>` via ``RefreshCRLs()`` in every 100st
-      iteration
-    - send a :ref:`NUL request <signer-nul-request-format>` to keep the signer
-      connection alive
-    - sleep for 2.7 seconds
+     - refresh :term:`CRLs <CRL>` via ``RefreshCRLs()`` in every 100st
+       iteration
+     - send a :ref:`NUL request <signer-nul-request-format>` to keep the signer
+       connection alive
+     - sleep for 2.7 seconds
 
-  There is potential for optimization in the main loop. The CRL update could
-  be performed if a certificate has been revoked. The NUL request needs only
-  to be sent if no other request has been sent.
+   The script uses a lot of temporary files instead of piping input and
+   output to and from external commands.
 
-  The script uses a lot of temporary files instead of piping input and
-  output to and from external commands.
+   .. todo:: describe more in-depth what each of the main loop steps does
 
-  .. todo:: describe more in-depth what each of the main loop steps does
+.. sourcefile:: CommModule/commdaemon
 
-- :file:`commdaemon` a script to run :ref:`client.pl <commmodule-client-pl>`
-  or :ref:`server.pl <commmodule-server-pl>`
+   :file:`commdaemon` is a script to run
+   :sourcefile:`client.pl <CommModule/client.pl>`
+   or :sourcefile:`server.pl <CommModule/server.pl>`.
 
-  This bash script is automatically restarting the :file:`{script}` given as
-  the first parameter as long as a file :file:`{script}-active` exists.
-  Informational messages and errors are logged to syslog via
-  :command:`logger`.
+   This bash script is automatically restarting the :file:`{script}` given as
+   the first parameter as long as a file :file:`{script}-active` exists.
+   Informational messages and errors are logged to syslog via
+   :command:`logger`.
 
-  The script is most probably used to recover from crashed scripts. This
-  could be implemented via :command:`supervisor` or :command:`systemd`
-  instead of a custom script.
+   The script is most probably used to recover from crashed scripts. This
+   could be implemented via :command:`supervisor` or :command:`systemd`
+   instead of a custom script.
 
-- :file:`commmodule` a System V style init script for startup/shutdown of
-  CommModule
+.. sourcefile:: CommModule/commmodule
 
-  On test.cacert.org two slightly different versions are deployed in
-  :file:`/etc/init.d` the first version starts
-  :ref:`client.pl <commmodule-client-pl>` in
-  :file:`/home/cacert/www/CommModule/` and the
-  second variant starts :ref:`server.pl <commmodule-server-pl>` in
-  :file:`/home/signer/cacert-devel/CommModule/`.
+   :file:`commodule` is a System V style init script for startup/shutdown of
+   CommModule
 
-- :file:`logclean.sh` maintenance script for logfiles generated by CommModule
+   On test.cacert.org two slightly different versions are deployed in
+   :file:`/etc/init.d` the first version starts
+   :sourcefile:`client.pl <CommModule/client.pl>` in
+   :file:`/home/cacert/www/CommModule/` and the
+   second variant starts :sourcefile:`server.pl <CommModule/server.pl>` in
+   :file:`/home/signer/cacert-devel/CommModule/`.
 
-  The :file:`logclean.sh` script performs log rotation of signer logfiles.
+.. sourcefile:: CommModule/logclean.sh
 
-  .. todo::
+   :file:`logclean.sh` is a maintenance script for logfiles generated by
+   CommModule.
 
-     discuss replacement of this script with :command:`logrotate` and a
-     custom logrotate.conf for the signer
+   The :file:`logclean.sh` script performs log rotation of signer logfiles.
 
-- :file:`serial.conf` serial port configuration file
+   .. todo::
 
-  This file is read and written by both
-  :ref:`client.pl <commmodule-client-pl>` and
-  :ref:`server.pl <commmodule-server-pl>` therefore both cannot be run from
-  the same directory without interfering with each other.
+      discuss replacement of this script with :command:`logrotate` and a
+      custom logrotate.conf for the signer
 
-  .. todo::
+.. sourcefile:: CommModule/serial.conf
 
-     add a serial.conf template and move the actual serial.conf into
-     configuration management
+   `serial.conf` serial port configuration file
 
-.. _commmodule-server-pl:
+   This file is read and written by both
+   :sourcefile:`client.pl <CommModule/client.pl>` and
+   :sourcefile:`server.pl <CommModule/server.pl>` therefore both cannot be run
+   from the same directory without interfering with each other.
 
-- :file:`server.pl` the real server, running on the signing server
+   .. todo::
 
-  This script implements the signer (server) side of the :doc:`signer
-  protocol <signer>` and performs the actual signing operations.
+      add a serial.conf template and move the actual serial.conf into
+      configuration management
 
-  The script contains a some code that is duplicated by
-  :ref:`client.pl <commmodule-client-pl>`.
+.. sourcefile:: CommModule/server.pl
 
-  .. note::
+   :file:`server.pl` is the signing server software.
 
-     The :file:`server.pl` used on test.cacert.org is different from the
-     version in the cacert-devel repository. The git origin is recorded as
-     `git://git-cacert.it-sls.de/cacert-devel.git` and there are some small
-     uncommitted changes too.
+   This script implements the signer (server) side of the :doc:`signer
+   protocol <signer>` and performs the actual signing operations.
 
-  .. todo::
+   The script contains a some code that is duplicated by
+   :sourcefile:`client.pl <CommModule/client.pl>`.
 
-     get the versions of server.pl on git.cacert.org, the real production
-     signer and the cacert-devel repository synchronized
+   .. note::
 
-- :file:`usbclient.pl` obsoleted USB version of
-  :ref:`client.pl <commmodule-client-pl>` above
+      The :file:`server.pl` used on test.cacert.org is different from the
+      version in the cacert-devel repository. The git origin is recorded as
+      `git://git-cacert.it-sls.de/cacert-devel.git` and there are some small
+      uncommitted changes too.
 
-  .. todo:: remove unused file (usbclient.pl)
+   .. todo::
+
+      get the versions of :file:`server.pl` on git.cacert.org, the real
+      production signer and the cacert-devel repository synchronized
+
+.. sourcefile:: CommModule/usbclient.pl
+
+   :file:`usbclient.pl` is an obsoleted USB version of
+   :sourcefile:`client.pl <CommModule/client.pl>` above
+
+   .. todo:: remove unused file (usbclient.pl)
   
 .. index:: includes 
 .. index:: PHP
 
 Directory :file:`includes`
-==============================
+==========================
 
-.. _includes-.cvsignore:
+.. sourcefile:: includes/.cvsignore
 
-.. sourcefile: includes/.cvsignore
+   :file:`.cvsignore` includes the parameters for CVS, which files to ignore by
+   versioning
 
-- :file:`.cvsignore` includes the parameters for CVS, which files to ignore by versioning
+   .. note:: CVS is long dead, is this still used?
 
-.. _includes-.directory:
+.. sourcefile:: includes/.gitignore
 
-.. sourcefile: includes/.gitignore
+   :file:`.gitignore` contains file patterns to be ignored by Git.
 
-- :file:`.gitignore` includes the parameters for GIT, which files to ignore by versioning
+.. sourcefile:: includes/about_menu.php
+   :links:
+      http://blog.cacert.org/
+      http://wiki.CAcert.org/
+      www/policy/
+      //wiki.cacert.org/FAQ/Privileges
+      www/index.php?id=47
+      www/logos.php
+      www/stats.php
+      http://blog.CAcert.org/feed/
+      www/index.php?id=7
+      //wiki.cacert.org/Board
+      https://lists.cacert.org/wws
+      www/src-lic.php
 
-.. _includes-about_menu.php:
+   :file:`about_menu.php` is a part (<div>) of a PHP-Page, containing most of
+   the CAcert-related links.
 
-.. sourcefile: includes/about_menu.php
-   :links: http://blog.cacert.org/
-   :links: http://wiki.CAcert.org/
-   :links: www/policy/
-   :links: //wiki.cacert.org/FAQ/Privileges
-   :links: www/index.php?id=47
-   :links: www/logos.php
-   :links: www/stats.php
-   :links: http://blog.CAcert.org/feed/
-   :links: www/index.php?id=7
-   :links: //wiki.cacert.org/Board
-   :links: https://lists.cacert.org/wws
-   :links: www/src-lic.php
+.. sourcefile:: includes/account_stuff.php
 
-- :file:`about_menu.php` is a part (<div>) of a PHP-Page, containing most of the CAcert-related links.   
+.. sourcefile:: includes/account.php
+   :uses:
+      includes/about_menu.php
+      .... showheader
 
-.. _includes-account_stuff.php:
+.. sourcefile:: includes/general_stuff.php
 
-.. sourcefile: includes/account_stuff.php
+.. sourcefile:: includes/general.php
 
-- :file:`account_stuff.php`
+.. sourcefile:: includes/keygen.php
 
-.. _includes-account.php:
+.. sourcefile:: includes/loggedin.php
 
-.. sourcefile: includes/account.php
-   :uses: includes/about_menu.php
-   :uses: .... showheader  
+.. sourcefile:: includes/mysql.php
 
-- :file:`account.php`
+   :file:`includes/mysql.php` is not contained in the :cacertgit:`cacert-devel`
+   repository but is used by several other files. The file is copied from
+   :sourcefile:`includes/mysql.php.sample` and defines the database connection
+   information.
 
-.. _includes-general_stuff.php:
+   This file is parsed directly by :sourcefile:`CommModule/client.pl`
+   format changes might break the CommModule code.
 
-.. sourcefile: includes/general_stuff.php
+.. sourcefile:: includes/mysql.php.sample
 
-- :file:`general_stuff.php`
+   :file:`mysql.php.sample` is a template for the database connection handling
+   code that is meant to be copied to :file:`mysql.php`.
 
-.. _includes-general.php:
+   The template defines the MySQL connection as a session variable `mconn` and
+   tries to connect to that database. It also defines the session variables
+   `normalhostname`, `securehostname` and `tverify`.
 
-.. sourcefile: includes/general.php
+   The template defines a function :php:func:`sendmail` for sending mails.
 
-- :file:`general.php`
+   .. php:function:: sendmail($to, $subject, $message, $from, $replyto="", \
+          $toname="", $fromname="", $errorsto="returns@cacert.org", \
+          $use_utf8=true)
 
-.. _includes-keygen.php:
+      Send an email. The function reimplements functionality that is readily
+      available in PHP. The function does not properly escape headers and
+      sends raw SMTP commands.
 
-.. sourcefile: includes/keygen.php
+      :param string $to:       recipient email address
+      :param string $subject:  subject
+      :param string $message:  email body
+      :param string $from:     from email address
+      :param string $replyto:  reply-to email address
+      :param string $fromname: unused in the code
+      :param string $toname:   unused in the code
+      :param string $errorsto: email address used for Sender and Errors-To
+                               headers
+      :param bool $use_utf8:   decides whether the Content-Type header uses
+                               a charset parameter of utf-8 or iso-8859-1
 
-- :file:`keygen.php`
+   Configuration and actual code are mixed. It would be better to have a
+   separate file that just includes configuration.
 
-.. _includes-loggedin.php:
+.. sourcefile:: includes/notary.inc.php
 
-.. sourcefile: includes/loggedin.php
+.. sourcefile:: includes/shutdown.php
 
-- :file:`loggedin.php`
+.. sourcefile:: includes/sponsorinfo.php
 
-.. _includes-mysql-php:
-.. _includes-mysql-php-sample:
+.. sourcefile:: includes/tverify_stuff.php
 
-- :file:`mysql.php.sample` is a template for the database connection handling
-  code that is meant to be copied to :file:`mysql.php`.
-
-  The template defines the MySQL connection as a session variable `mconn` and
-  tries to connect to that database. It also defines the session variables
-  `normalhostname`, `securehostname` and `tverify`.
-
-  The template defines a function :php:func:`sendmail` for sending mails.
-
-  .. php:function:: sendmail($to, $subject, $message, $from, $replyto="", \
-         $toname="", $fromname="", $errorsto="returns@cacert.org", \
-         $use_utf8=true)
-
-     Send an email. The function reimplements functionality that is readily
-     available in PHP. The function does not properly escape headers and
-     sends raw SMTP commands.
-
-     :param string $to:       recipient email address
-     :param string $subject:  subject
-     :param string $message:  email body
-     :param string $from:     from email address
-     :param string $replyto:  reply-to email address
-     :param string $fromname: unused in the code
-     :param string $toname:   unused in the code
-     :param string $errorsto: email address used for Sender and Errors-To
-                              headers
-     :param bool $use_utf8:   decides whether the Content-Type header uses
-                              a charset parameter of utf-8 or iso-8859-1
-
-  Configuration and actual code are mixed. It would be better to have a
-  separate file that just includes configuration.
-
-  This file is parsed by :ref:`CommModule/client.pl <commmodule-client-pl>`
-  format changes might break the CommModule code.
-  
-.. _includes-notary.inc.php:
-
-.. sourcefile: includes/notary.inc.php
-
-- :file:`notary.inc.php`
-
-.. _includes-shutdown.php:
-
-.. sourcefile: includes/shutdown.php
-
-- :file:`shutdown.php`
-
-.. _includes-sponsorinfo.php:
-
-.. sourcefile: includes/sponsorinfo.php
-
-- :file:`sponsorinfo.php`
-
-.. _includes-tverify_stuff.php:
-
-.. sourcefile: includes/tverify_stuff.php
-
-- :file:`tverify_stuff.php`
 
 .. index:: includes/lib
 .. index:: PHP
@@ -332,150 +322,63 @@ Directory :file:`includes`
 Directory :file:`includes/lib`
 ==============================
 
-.. _includes-lib-account.php:
+.. sourcefile:: includes/lib/account.php
 
-.. sourcefile: includes/lib/account.php
+.. sourcefile:: includes/lib/check_weak_key.php
 
-- :file:`account.php`
+.. sourcefile:: includes/lib/general.php
 
-.. _includes-lib-check_weak_key.php:
+.. sourcefile:: includes/lib/l10n.php
 
-.. sourcefile: includes/lib/check_weak_key.php
-
-- :file:`check_weak_key.php`
-
-.. _includes-lib-general.php:
-
-.. sourcefile: includes/lib/general.php
-
-- :file:`general.php`
-
-.. _includes-lib-l10n.php:
-
-.. sourcefile: includes/lib/l10n.php
-
-- :file:`l10n.php`
 
 .. index:: locale
 
 Directory :file:`locale`
 ========================
 
-.. index:: C
+.. sourcefile:: locale/cv.c
 
-.. _locale-cv.c:
+.. sourcefile:: locale/escape_special_chars.php
 
-.. sourcefile: locale/cv.c
+.. sourcefile:: locale/makefile
 
-- :file:`cv.c`
-
-.. index:: PHP
-.. _locale-escape_special_chars.php:
-
-.. sourcefile: locale/escape_special_chars.php
-
-- :file:`escape_special_chars.php`
-
-.. index:: bash
-.. _locale-makefile:
-
-.. sourcefile: locale/makefile
-
-- :file:`makefile`
-
-.. index:: pages
-
-Directory :file:`pages`
-=======================
-
-This directory only contains other (sub-) directorys, structured according to specific topics.
-
-.. include:: DIR-pages.rst
 
 .. index:: scripts
 .. index:: PHP
 .. index:: txt
 
-Directory :file:`scripts`
-=========================
-
-.. include:: DIR-scripts.rst
-
 Directory :file:`stamp`
 =======================
 
-.. _stamp-certdet.php:
+.. sourcefile:: stamp/certdet.php
 
-.. sourcefile: stamp/certdet.php
+.. sourcefile:: stamp/common.php
 
-- :file:`certdet.php`
+.. sourcefile:: stamp/displogo.php
 
-.. _stamp-common.php:
+.. sourcefile:: stamp/.htaccess
 
-.. sourcefile: stamp/common.php
+.. sourcefile:: stamp/index.php
 
-- :file:`common.php`
+.. sourcefile:: stamp/old_showlogo.php.broken
 
-.. _stamp-displogo.php:
+.. sourcefile:: stamp/report.php
 
-.. sourcefile: stamp/displogo.php
+.. sourcefile:: stamp/showlogo.php
 
-- :file:`displogo.php`
+.. sourcefile:: stamp/style.css
 
-.. _stamp-.htaccess:
-
-.. sourcefile: stamp/.htaccess
-
-- :file:`.htaccess`
-
-.. _stamp-index.php:
-
-.. sourcefile: stamp/index.php
-
-- :file:`index.php`
-
-.. _stamp-old_showlogo.php.broken:
-
-.. sourcefile: stamp/old_showlogo.php.broken
-
-- :file:`old_showlogo.php.broken`
-
-.. _stamp-report.php:
-
-.. sourcefile: stamp/report.php
-
-- :file:`report.php`
-
-.. _stamp-showlogo.php:
-
-.. sourcefile: stamp/showlogo.php
-
-- :file:`showlogo.php`
-
-.. _stamp-style.css:
-
-.. sourcefile: stamp/style.css
-
-- :file:`style.css`
 
 Directory :file:`stamp/images`
 ==============================
 
-.. _stamp-images-CAverify.png:
+.. sourcefile:: stamp/images/CAverify.png
 
-.. sourcefile: stamp/images/CAverify.png
-
-- :file:`CAverify.png`
 
 Directory :file:`tmp`
 =====================
 
-.. _tmp-Makefile:
-
-.. sourcefile: tmp/Makefile
-
-- :file:`Makefile`
-
+.. sourcefile:: tmp/Makefile
 
 
 .. index:: tverify
@@ -483,70 +386,18 @@ Directory :file:`tmp`
 Directory :file:`tverify`
 =========================
 
-.. _tverify-favicon.ico:
+.. sourcefile:: tverify/favicon.ico
 
-.. sourcefile: tverify/favicon.ico
+.. sourcefile:: tverify/.htaccess
 
-- :file:`favicon.ico`
+.. sourcefile:: tverify/index
 
-.. _tverify-.htaccess:
-
-.. sourcefile: tverify/.htaccess
-
-- :file:`.htaccess`
-
-.. _tverify-index:
-
-.. sourcefile: tverify/index
-
-- :file:`index`
-
-.. _tverify-index.php:
-
-.. sourcefile: tverify/index.php
-
-- :file:`index.php`
+.. sourcefile:: tverify/index.php
 
 
 Directory :file:`tverify/index`
 ===============================
 
-.. _tverify-index-0.php:
+.. sourcefile:: tverify/index/0.php
 
-.. sourcefile: tverify/index/0.php
-
-- :file:`0.php`
-
-.. _tverify-index-1.php:
-
-.. sourcefile: tverify/index/1.php
-
-- :file:`1.php`
-
-
-
-
-.. index:: WWW
-.. index:: PHP
-
-Directory :file:`www`
-=====================
-
-This contains the PHP code that is the entry point to the application:
-
-.. include:: DIR-www.rst
-
-.. .. _www-sealgen-php:
-.. 
-.. - :file:`sealgen.php` generates a small site seal image from
-..   :ref:`www/images/secured.png <www-images-secured-png>`. This could be
-..   replaced with a static image if it is used at all. This is referenced
-..   by :ref:`cgi-bin/siteseal.cgi <cgi-bin-siteseal-cgi>`
-
-.. Directory :file:`www/images`
-.. ============================
-.. 
-.. .. _www-images-secured-png:
-.. 
-.. - :file:`secured.png` is a small image used by
-..   :ref:`www/sealgen.php <www-sealgen-php>`
+.. sourcefile:: tverify/index/1.php
