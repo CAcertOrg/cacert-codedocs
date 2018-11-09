@@ -66,6 +66,7 @@ class SourceFile(Directive):
     has_content = True
     required_arguments = 1
     optional_arguments = 0
+    final_argument_whitespace = True
     option_spec = {
         'uses': file_list,
         'links': file_list,

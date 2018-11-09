@@ -172,42 +172,42 @@ Directory :file:`scripts/db_migrations`
 Directory :file:`scripts/mailing archive`
 =========================================
 
-.. sourcefile:: scripts/mailing_archive/45au-ate-melbourne-email.txt
+.. sourcefile:: scripts/mailing archive/45au-ate-melbourne-email.txt
 
-.. sourcefile:: scripts/mailing_archive/45au-ate-melbourne-mail.php.txt
+.. sourcefile:: scripts/mailing archive/45au-ate-melbourne-mail.php.txt
 
-.. sourcefile:: scripts/mailing_archive/46us-ate-raleigh-email.txt
+.. sourcefile:: scripts/mailing archive/46us-ate-raleigh-email.txt
 
-.. sourcefile:: scripts/mailing_archive/46us-ate-raleigh-mail.php.txt
+.. sourcefile:: scripts/mailing archive/46us-ate-raleigh-mail.php.txt
 
-.. sourcefile:: scripts/mailing_archive/47us-fudcon-lawrence-email.txt
+.. sourcefile:: scripts/mailing archive/47us-fudcon-lawrence-email.txt
 
-.. sourcefile:: scripts/mailing_archive/47us-fudcon-lawrence-mail.php.txt
+.. sourcefile:: scripts/mailing archive/47us-fudcon-lawrence-mail.php.txt
 
-.. sourcefile:: scripts/mailing_archive/48de-ate-kiel-email.txt
+.. sourcefile:: scripts/mailing archive/48de-ate-kiel-email.txt
 
-.. sourcefile:: scripts/mailing_archive/48de-ate-kiel-mail.php.txt
+.. sourcefile:: scripts/mailing archive/48de-ate-kiel-mail.php.txt
 
-.. sourcefile:: scripts/mailing_archive/oa01-allowance.php.txt
+.. sourcefile:: scripts/mailing archive/oa01-allowance.php.txt
 
-.. sourcefile:: scripts/mailing_archive/oa01-allowance.txt
+.. sourcefile:: scripts/mailing archive/oa01-allowance.txt
 
-.. sourcefile:: scripts/mailing_archive/oa02-mailingtextCats.txt
+.. sourcefile:: scripts/mailing archive/oa02-mailingtextCats.txt
 
-.. sourcefile:: scripts/mailing_archive/oa02-mailingtextPointsCats.txt
+.. sourcefile:: scripts/mailing archive/oa02-mailingtextPointsCats.txt
 
-.. sourcefile:: scripts/mailing_archive/oa02-mailingtextPoints.txt
+.. sourcefile:: scripts/mailing archive/oa02-mailingtextPoints.txt
 
-.. sourcefile:: scripts/mailing_archive/oa02-orgainformation.php.txt
+.. sourcefile:: scripts/mailing archive/oa02-orgainformation.php.txt
 
-.. sourcefile:: scripts/mailing_archive/thawte_DE.txt
+.. sourcefile:: scripts/mailing archive/thawte_DE.txt
 
-.. sourcefile:: scripts/mailing_archive/thawte_EN.txt
+.. sourcefile:: scripts/mailing archive/thawte_EN.txt
 
-.. sourcefile:: scripts/mailing_archive/thawte_ES.txt
+.. sourcefile:: scripts/mailing archive/thawte_ES.txt
 
-.. sourcefile:: scripts/mailing_archive/thawte_FR.txt
+.. sourcefile:: scripts/mailing archive/thawte_FR.txt
 
-.. sourcefile:: scripts/mailing_archive/thawte_NL.txt
+.. sourcefile:: scripts/mailing archive/thawte_NL.txt
 
-.. sourcefile:: scripts/mailing_archive/thawte_RU.txt
+.. sourcefile:: scripts/mailing archive/thawte_RU.txt

@@ -129,7 +129,7 @@ Directory :file:`www/docs`
 
 .. sourcefile:: www/docs/CAcert_Rules.sxw
 
-.. sourcefile:: www/docs/encryption_in_the_real_world.sxi
+.. sourcefile:: www/docs/encryption in the real world.sxi
 
 .. sourcefile:: www/docs/flyer.sxw
 
