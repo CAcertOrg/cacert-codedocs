@@ -1,9 +1,9 @@
 .. index:: WWW
 .. index:: PHP
 
-=============
-Directory www
-=============
+=====================
+Directory :file:`www`
+=====================
 
 This contains the PHP code that is the entry point to the application:
 
