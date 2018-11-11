@@ -16,8 +16,8 @@ from datetime import datetime
 import os
 import certifi
 import requests
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import sys
+sys.path.insert(0, os.path.abspath('.'))
 
 from git import repo
 from docutils import nodes, utils
@@ -65,6 +65,7 @@ extensions = [
     'sphinxcontrib.phpdomain',
     'sphinxcontrib.blockdiag',
     'sphinxcontrib.seqdiag',
+    'sphinxext.cacert',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
