@@ -44,6 +44,9 @@ This contains the PHP code that is the entry point to the application:
 .. sourcefile:: www/.htaccess
 
 .. sourcefile:: www/index.php
+    :uses: 
+       www.includes/lib/l10n.php
+       www.includes/notary.inc.php
 
 .. sourcefile:: www/keygenIE.js
 
