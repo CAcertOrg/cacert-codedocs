@@ -238,6 +238,10 @@ Directory :file:`pages/index`
 
 .. sourcefile:: pages/index/19.php
 
+.. sourcefile:: pages/index/20.php
+
+    The file :file:`pages/index/20.php` doesn't exist but is linked to.
+
 .. sourcefile:: pages/index/21.php
 
 .. sourcefile:: pages/index/47.php

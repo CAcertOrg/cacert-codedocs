@@ -1,0 +1,11 @@
+/includes/mysql.php configs:
+
+$_SESSION['mconn'] = TRUE;
+$_SESSION['_config']['normalhostname'] = "www.cacert.org";
+$_SESSION['_config']['securehostname'] = "secure.cacert.org";
+$_SESSION['_config']['tverify'] = "tverify.cacert.org";
+
+
+/includes/general.php
+
+$_SESSION['_config']['filepath']
