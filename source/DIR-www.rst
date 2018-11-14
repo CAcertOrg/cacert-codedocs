@@ -44,6 +44,21 @@ This contains the PHP code that is the entry point to the application:
 .. sourcefile:: www/.htaccess
 
 .. sourcefile:: www/index.php
+   :uses: 
+      includes/lib/l10n.php
+      includes/notary.inc.php
+      pages/index/17.php
+      pages/index/20.php
+      includes/general.php-loadem
+      incledes/mysql.php-sendmail
+      includes/general.php-checkpw
+   
+   The :file:`index.php` is the main page of the CAcert website. Depending on an id transfered to this module different actions are performed.
+
+   ids 
+
+.. todo:: Check where/when includes/general.php and includes/mysql.php is loaded 
+   
 
 .. sourcefile:: www/keygenIE.js
 
