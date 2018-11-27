@@ -50,7 +50,7 @@ This contains the PHP code that is the entry point to the application:
       pages/index/17.php
       pages/index/20.php
       includes/general.php-loadem
-      incledes/mysql.php-sendmail
+      includes/mysql.php-sendmail
       includes/general.php-checkpw
    
    The :file:`index.php` is the main page of the CAcert website. Depending on an id transfered to this module different actions are performed.
