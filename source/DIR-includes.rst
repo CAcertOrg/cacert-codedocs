@@ -18,21 +18,16 @@ Directory :file:`includes`
 
 .. sourcefile:: includes/about_menu.php
    :links:
-      http://blog.cacert.org/
-      http://wiki.CAcert.org/
       www/policy/
-      //wiki.cacert.org/FAQ/Privileges
       www/index.php?id=47
       www/logos.php
       www/stats.php
-      http://blog.CAcert.org/feed/
       www/index.php?id=7
-      //wiki.cacert.org/Board
-      https://lists.cacert.org/wws
       www/src-lic.php
 
    :file:`about_menu.php` is a part (<div>) of a PHP-Page, containing most of
    the CAcert-related links.
+   It uses hardcoded links to some CAcert-sites :samp:`http://blog.cacert.org`, :samp:`http://wiki.CAcert.org/`, :samp:`http://wiki.cacert.org/FAQ/Privileges`, :samp:`http://blog.CAcert.org/feed/`, :samp:`http://wiki.cacert.org/Board`, :samp:`https://lists.cacert.org/wws` 
 
 .. sourcefile:: includes/account_stuff.php
 
@@ -67,46 +62,62 @@ Directory :file:`includes`
         includes/loggedin.php
         includes/lib/l10n.php
         includes/lib/check_weak_key.php
-        SOME__checkWeakKeySPKAC
-        SOME__checkWeakKeyCSR
-        SOME__checkWeakKeyX509        
         includes/notary.inc.php
-        SOME__check_email_exists
-        SOME__account_email_delete
-        SOME__write_user_agreement
-        SOME__account_domain_delete
-        SOME__valid_ticket_number
-        SOME__write_se_log
-        SOME__revoke_all_private_cert
-        SOME__check_client_cert_running
-        SOME__check_server_cert_running
-        SOME__check_gpg_cert_running
-        SOME__check_is_orgadmin
-        SOME__account_delete
-        includes/general.php
-        SOME__loadem
-        SOME__csrf_check
-        SOME__sanitizeHTML
-        SOME__checkEmail
-        SOME__make_hash
-        SOME__generatecertpath
-        SOME__waitForResult
-        SOME__clean_csr
-        SOME__extractit
-        SOME__getcn
-        SOME__getalt
-        SOME__runCommand
-        includes/account_stuff.php
-        SOME__showheader
-        SOME__showfooter
-        includes/mysql.php
-        SOME__sendmail
-        includes/lib/account.php
-        SOME__HashAlgorithms::clean_csr
+
+    :file:`includes/account.php` first loads some more includefiles via :php:func:`loadem`. It defines two functions and read the global variables 
+    :php:global:`$_REQUEST['id']`, 
+    :php:global:`$_REQUEST['oldid']`,
+    :php:global:`$_REQUEST['process']`,
+    :php:global:`$_REQUEST['showdetails']`,
+    :php:global:`$_REQUEST['cert']`,
+    :php:global:`$_REQUEST['orgid']`,
+    :php:global:`$_REQUEST['memid']`,
+    :php:global:`$_REQUEST['domid']`,
+    :php:global:`$_REQUEST['action']`,
+    :php:global:`$_REQUEST['ticketno']`,
+    :php:global:`$_SESSION['mconn']`
 
     .. php:function:: buildSubject(array $domains, $include_xmpp_addr = true)
 
-        Build a subject string as needed by the signer
+        Build a subject string as needed by the signer.
+        This function uses 
+        :php:func:`account_domain_delete`,
+        :php:func:`account_email_delete`,
+        :php:func:`buildSubjectFromSession`,
+        :php:func:`check_client_cert_running`,
+        :php:func:`check_gpg_cert_running`,
+        :php:func:`check_is_orgadmin`,
+        :php:func:`check_server_cert_running`,
+        :php:func:`checkEmail`,
+        :php:func:`checkpw`,
+        :php:func:`checkWeakKeyCSR`,
+        :php:func:`checkWeakKeySPKAC`,
+        :php:func:`checkWeakKeyX509`,
+        :php:func:`clean_csr`,
+        :php:meth:`HashAlgorithms::clean`,
+        :php:func:`csrf_check`,
+        :php:func:`extractit`,
+        :php:func:`generatecertpath`,
+        :php:meth:`L10n::get_translation`,
+        :php:func:`getalt`,
+        :php:func:`getalt2`,
+        :php:func:`getcn`,
+        :php:func:`getcn2`,
+        :php:func:`make_hash`,
+        :php:func:`revoke_all_private_cert`,
+        :php:func:`runCommand`,
+        :php:func:`sanitizeHTML`,
+        :php:func:`sendmail`,
+        :php:meth:`L10n::set_recipient_language`,
+        :php:meth:`L10n::set_translation`,
+        :php:func:`showheader`,  
+        :php:func:`showfooter`,
+        :php:attr:`L10n::$translations`,
+        :php:func:`valid_ticket_number`,
+        :php:func:`waitForResult`,
+        :php:func:`write_se_log`,
+        :php:func:`write_user_agreement`   
+        
 
         :param array(string) $domains: First domain is used as CN and repeated in subjectAltName. Duplicates should already been removed
         :param bool $include_xmpp_addr: [default: true] Whether to include the XmppAddr in the subjectAltName. This is needed if the Jabber server is jabber.example.com but a Jabber ID on that server would be alice@example.com
@@ -118,12 +129,25 @@ Directory :file:`includes`
 
         :return: * (string) - 
         
-    .. todo:: analyze the module 
-    
 
 .. sourcefile:: includes/general_stuff.php
+    :uses:
+        /includes/lib/l10n.php
+
+    This process uses 
+    :php:func:`showbodycontent`,
+    :php:func:`showfooter`,
+    :php:func:`showheader`
+
+    .. php:function:: showbodycontent($title = "CAcert.org", $title2 = "")
+
+    
+    
+
 
 .. sourcefile:: includes/general.php
+
+    .. php:function:: loadem
 
 .. sourcefile:: includes/keygen.php
 
@@ -160,10 +184,43 @@ Directory :file:`includes`
    :file:`mysql.php.sample` is a template for the database connection handling
    code that is meant to be copied to :file:`mysql.php`.
 
-   The template defines the MySQL connection as a session variable `mconn` and
-   tries to connect to that database. It also defines the session variables
-   `normalhostname`, `securehostname` and `tverify`.
+   The template defines the MySQL connection as a session variable :php:global:`$_SESSION['mconn']` while connecting to that database. It also defines the session variables
+   :php:global:`$_SESSION['_config']['normalhostname']`, :php:global:`$_SESSION['_config']['securehostname']` and :php:global:`$_SESSION['_config']['tverify']`.
 
+   .. php:global:: $_SESSION['mconn']
+
+   This global variable defines the status of the database connection
+
+   * TRUE if a connection could be established
+   * FALSE otherwise
+
+   .. php:global:: $_SESSION['_config']['normalhostname']
+
+   This global variable defines the main CAcert-website
+
+   * "www.cacert.org" for production
+   * "test.cacert.org" for testing
+
+   .. php:global:: $_SESSION['_config']['securehostname']
+
+   This global variable defines the secure CAcert-website
+
+   * "secure.cacert.org" for production
+   * "       cacert.org" for testing
+
+   .. php:global:: $_SESSION['_config']['tverify']
+
+   This global variable defines TVERIFY 
+
+   * "tverify.cacert.org" for production
+   * "                  " for testing
+
+   .. todo:: checkout what TVERIFY means, check names for test-system
+
+   
+   
+   
+   
    The template defines a function :php:func:`sendmail` for sending mails.
 
    .. php:function:: sendmail($to, $subject, $message, $from, $replyto="", \
@@ -882,11 +939,104 @@ Directory :file:`includes/lib`
 
 .. sourcefile:: includes/lib/account.php
 
+    :file:`include/lib/account.php` defines a function and a class for use by other precedures.
+
+    .. php:function:: fix_assurer_flag($userID = NULL)
+
+        Function to recalculate the cached Assurer status. Update Assurer-Flag on users table if 100 points and CATS passed. We may have some performance issues here if no userID is given there are ~150k assurances and ~220k users currently but the exists-clause on cats_passed should be a good filter.
+
+        :param int $userID: if the user ID is not given the flag will be recalculated for all users
+        :returns: * (bool) - false if there was an error on fixing the flag. This does NOT return the new value of the flag
+
+    .. php:class:: HashAlgorithms
+
+        Supported hash algorithms for signing certificates.
+
+    .. php:attr:: $default
+
+        Default hash algorithm identifier for signing
+
+    .. php:staticmethod:: getInfo()
+
+        Get display strings for the supported hash algorithms.
+
+        :returns: * (array(string=>array('name'=>string, 'info'=>string)))
+
+            #. [$hash_identifier]['name'] = Name that should be displayed in UI
+            #. [$hash_identifier]['info'] = Additional information that can help with the selection of a suitable algorithm
+
+    .. php:staticmethod:: clean($hash_identifier)
+
+        Check if the input is a supported hash algorithm identifier otherwise return the identifier of the default hash algorithm
+
+        :param string $hash_identifier:
+        :returns: * (string) - The cleaned identifier
+
 .. sourcefile:: includes/lib/check_weak_key.php
 
+    :uses:
+        includes/lib/general.php
+
+    :file:`includes/lib/check_weak_key.php` does the checking of keys for vulnaribilities and therefore provides some functions to be used by other procedures.
+
+    .. php:function:: checkWeakKeyCSR($csr, $encoding = "PEM")
+
+        Checks whether the given CSR contains a vulnerable key. 
+        This function uses:
+        :php:func:`checkWeakKeyText`,
+        :php:func:`failWithId`,
+        :php:func:`runCommand`
+
+        :param string $csr: The CSR to be checked
+        :param string [optional]  $encoding: The encoding the CSR is in (for the "-inform" parameter of OpenSSL, currently only "PEM" (default) or "DER" allowed)
+        :returns: * (string) - containing the reason if the key is considered weak, empty string otherwise
+
+    .. php:function:: checkWeakKeyX509($cert, $encoding = "PEM")
+
+        Checks whether the given X509 certificate contains a vulnerable key.
+        This function uses:
+        :php:func:`checkWeakKeyText`,
+        :php:func:`failWithId`,
+        :php:func:`runCommand`
+
+        :param string $cert: The X509 certificate to be checked
+        :param string [optional] $encoding: The encoding the certificate is in (for the "-inform" parameter of OpenSSL, currently only "PEM" (default), "DER" or "NET" allowed)
+        :returns: * (string) - String containing the reason if the key is considered weak, empty string otherwise
+
+    .. php:function:: checkWeakKeySPKAC($spkac, $spkacname = "SPKAC")
+
+        Checks whether the given SPKAC certificate contains a vulnerable key.
+        This function uses:
+        :php:func:`checkWeakKeyText`,
+        :php:func:`failWithId`,
+        :php:func:`runCommand`
+
+        :param string $spkac: The SPKAC to be checked
+        :param string [optional] $spkacname: The name of the variable that contains the SPKAC. The default is "SPKAC"
+        :returns: * (string) - String containing the reason if the key is considered weak, empty string otherwise
+
+    .. php:function:: checkWeakKeyText($text)
+
+        Checks whether the given text representation of a CSR or a SPKAC contains a weak key.
+        This function uses:
+        :php:func:`checkDebianVulnerability`,
+        :php:func:`failWithId`,
+        :php:func:`runCommand`
+
+        :param string $text: The text representation of a key as output by the "openssl <foo> -text -noout" commands
+        :returns: * (string) - String containing the reason if the key is considered weak, empty string otherwise
+
+    .. php:function:: checkDebianVulnerability($text, $keysize = 0)
+
+        Reimplement the functionality of the openssl-vulnkey tool
+
+        :param string $text: The text representation of a key as output by the "openssl <foo> -text -noout" commands
+        :param int [optional] $keysize: If the key size is already known it can be provided so it doesn't have to be parsed again. This also skips the check whether the key is an RSA key => use wisely.
+        :returns: * (mixed) - TRUE if key is vulnerable, FALSE otherwise, NULL in case of error
+    
 .. sourcefile:: includes/lib/general.php
 
-    :file:`includes/lib/general.php` provides the system with three functions.
+    :file:`includes/lib/general.php` provides the system with four functions.
     
     .. php:function:: get_user_id_from_cert($serial, $issuer_cn)
 
@@ -918,7 +1068,7 @@ Directory :file:`includes/lib`
         Determine if the user with the passed userid is an assurer.
         
         :param int $userid: id of the user to be checked.
-        :return: * (int) - 0 if user is an assurer; 3,7,11,15 if 100 ssurance points not reached; 5,7,13,15 if assurer test is missing; 9,11,13,15 if not allowed to b an assurer. 
+        :return: * (int) - 0 if user is an assurer; 3,7,11,15 if 100 ssurance points not reached; 5,7,13,15 if assurer test is missing; 9,11,13,15 if not allowed to be an assurer. 
 
 
 .. sourcefile:: includes/lib/l10n.php
@@ -931,9 +1081,13 @@ Directory :file:`includes/lib`
 
     .. php:class:: L10n
 
-        Allowed/possible translations are "ar", "bg", "cs", "da", "de", "el", "en", "es", "fi", "fr", "hu", "it", "ja", "lv", "nl", "pl", "pt", "pt-br", "ru", "sv", "tr", "zh-cn", "zh-tw".
+    .. php:attr:: $translations 
 
-        Allowed locales are "ar_JO", "bg_BG", "cs_CZ", "da_DK", "de_DE", "el_GR", "en_US", "es_ES", "fa_IR", "fi_FI", "fr_FR", "he_IL", "hr_HR", "hu_HU", "id_ID", "is_IS", "it_IT", "ja_JP", "ka_GE", "ko_KR", "lv_LV", "nb_NO", "nl_NL", "pl_PL", "pt_PT", "pt_BR", "ro_RO", "ru_RU", "sl_SI", "sv_SE", "th_TH", "tr_TR", "uk_UA", "zh_CN", "zh_TW".
+        An array of possible translations ("ISO-language code" => "native name of the language"). At the moment with values: "ar", "bg", "cs", "da", "de", "el", "en", "es", "fi", "fr", "hu", "it", "ja", "lv", "nl", "pl", "pt", "pt-br", "ru", "sv", "tr", "zh-cn", "zh-tw".
+
+    .. php:attr:: $locales
+
+        An array of allowed locales. Values at the moment: "ar_JO", "bg_BG", "cs_CZ", "da_DK", "de_DE", "el_GR", "en_US", "es_ES", "fa_IR", "fi_FI", "fr_FR", "he_IL", "hr_HR", "hu_HU", "id_ID", "is_IS", "it_IT", "ja_JP", "ka_GE", "ko_KR", "lv_LV", "nb_NO", "nl_NL", "pl_PL", "pt_PT", "pt_BR", "ro_RO", "ru_RU", "sl_SI", "sv_SE", "th_TH", "tr_TR", "uk_UA", "zh_CN", "zh_TW".
 
     .. php:staticmethod:: detect_language()
 
@@ -976,9 +1130,3 @@ Directory :file:`includes/lib`
         Returns the language of a recipient to make sure that the language is correct
 
         :param int $accountid: accountnumber of the recipient
-        
-        
-        
-        
-        
-        
