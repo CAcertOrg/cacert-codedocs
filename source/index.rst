@@ -21,6 +21,7 @@ contribution. The canonical repository is the :cacertgit:`cacert-devel` though.
    :caption: Contents:
 
    general
+   globals
    directories
    database
    signer
