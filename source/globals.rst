@@ -12,9 +12,27 @@ Global Variables
 
 :php:global:`$_REQUEST`
 =======================
+.. php:global:: $_REQUEST['action']
+
+.. php:global:: $_REQUEST['cert']
+
+.. php:global:: $_REQUEST['domid']
+
+.. php:global:: $_REQUEST['id']
 
 .. php:global:: $_REQUEST["lang"]
 
+.. php:global:: $_REQUEST['memid']
+
+.. php:global:: $_REQUEST['oldid']
+
+.. php:global:: $_REQUEST['orgid']`
+
+.. php:global:: $_REQUEST['process']
+
+.. php:global:: $_REQUEST['showdetails']
+
+.. php:global:: $_REQUEST['ticketno']
 
 .. index:: $_SERVER
 
@@ -22,6 +40,8 @@ Global Variables
 ======================
 
 .. php:global:: $_SERVER['HTTP_ACCEPT_LANGUAGE']
+
+.. php:global:: $_SERVER['PHP_SELF']
 
 
 .. index:: $_SESSION
@@ -42,12 +62,22 @@ This global variable defines the status of the database connection
 :php:global:`$_SESSION['_config']`
 ----------------------------------
 
+.. php:global:: $_SESSION['_config']['errmsg']
+
+.. php:global:: $_SESSION['_config']['filepath']
+
+.. php:global:: $_SESSION['_config']['header']
+
+.. php:global:: $_SESSION['_config']['language']
+
 .. php:global:: $_SESSION['_config']['normalhostname']
 
 This global variable defines the main CAcert-website
 
 * "www.cacert.org" for production
 * "test.cacert.org" for testing
+
+.. php:global:: $_SESSION['_config']['recode']
 
 .. php:global:: $_SESSION['_config']['securehostname']
 
@@ -56,19 +86,76 @@ This global variable defines the secure CAcert-website
 * "secure.cacert.org" for production
 * "       cacert.org" for testing
 
-.. php:global:: $_SESSION['_config']['tverify']
+    .. php:global:: $_SESSION['_config']['tverify']
 
-This global variable defines TVERIFY 
+    This global variable defines TVERIFY 
 
-* "tverify.cacert.org" for production
-* "                  " for testing
+    * "tverify.cacert.org" for production
+    * "                  " for testing
+
+
 
 .. todo:: checkout what TVERIFY means, check names for test-system
 
-.. php:global:: $_SESSION['_config']['language'] 
+.. index:: $_SESSION['profile']
 
-.. php:global:: $_SESSION['_config']['recode']
+----------------------------------
+:php:global:`$_SESSION['profile']`
+----------------------------------
 
-.. php:global:: $_SESSION['_config']['filepath']
+.. php:global:: $_SESSION['profile']['adadmin']
+
+.. php:global:: $_SESSION['profile']['admin']
+
+.. php:global:: $_SESSION['profile']['assurer']
+
+.. php:global:: $_SESSION['profile']['dob']
+
+.. php:global:: $_SESSION['profile']['email']
+
+.. php:global:: $_SESSION['profile']['fname']
+
+.. php:global:: $_SESSION['profile']['id']
+
+.. php:global:: $_SESSION['profile']['lname']
+
+.. php:global:: $_SESSION['profile']['locadmin']
+
+.. php:global:: $_SESSION['profile']['mname']
+
+.. php:global:: $_SESSION['profile']['orgadmin']
+
+.. php:global:: $_SESSION['profile']['points']
+
+.. php:global:: $_SESSION['profile']['suffix']
+
+.. index:: globalConstants
+
+================
+Global Constants
+================
+
+.. php:const:: NULL_DATETIME
+
+    This constant has the value '0000-00-00 00:00:00'
+
+.. php:const:: THAWTE_REVOCATION_DATETIME
+
+    This constant has the value '2010-11-16 00:00:00'.
+
+
+
+
+==========
+Exceptions
+========== 
+
+.. php:exception:: E_USER_NOTICE
+
+.. php:exception:: E_USER_WARNING
+
+.. php:exception:: E_USER_ERROR
+
+
 
 

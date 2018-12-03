@@ -16,36 +16,70 @@ Directory :file:`includes`
 
    :file:`.gitignore` contains file patterns to be ignored by Git.
 
-.. sourcefile:: includes/about_menu.php
-   :links:
-      www/policy/
-      www/index.php?id=47
-      www/logos.php
-      www/stats.php
-      www/index.php?id=7
-      www/src-lic.php
 
-   :file:`about_menu.php` is a part (<div>) of a PHP-Page, containing most of
-   the CAcert-related links.
-   It uses hardcoded links to some CAcert-sites :samp:`http://blog.cacert.org`, :samp:`http://wiki.CAcert.org/`, :samp:`http://wiki.cacert.org/FAQ/Privileges`, :samp:`http://blog.CAcert.org/feed/`, :samp:`http://wiki.cacert.org/Board`, :samp:`https://lists.cacert.org/wws` 
+
+.. sourcefile:: includes/about_menu.php
+
+    :links:
+
+        "http://blog.cacert.org/"
+
+        "http://blog.CAcert.org/feed/"
+
+        "http://bugs.CAcert.org/"
+
+        "https://lists.cacert.org/wws"
+
+        "http://wiki.CAcert.org/"
+
+        "http://wiki.cacert.org/Board"
+        
+        "http://wiki.cacert.org/FAQ/Privileges"
+
+        "www/policy/"
+
+        "www/src-lic.php"
+
+    :file:`about_menu.php` is a part (<div>) of a PHP-Page, containing most of
+    the CAcert-related links. It uses :php:global:`$_SESSION['mconn']`
+
+
 
 .. sourcefile:: includes/account_stuff.php
 
+    
+
+        
+
+    :uses:
+
+        includes/about_menu.php
+
     :file:`includes/account_stuff.php` provides two procedures to be used for building the output of some HTML-pages.
     
+    It uses the global variables:
+    :php:global:`$_REQUEST['id']`
+   
     .. php:function:: showheader($title = "CAcert.org", $title2 = "")
 
-        This function renders a page depending on the calling file. It is expected that only files
-
-            www/wot.php (web-of-trust),
-
-            www/gpg.php (gpg-key), 
-
-            www/disputes.php (disputes) and 
-
-            www/advertising.php (advertising) 
-            
-        are using this function.
+        This function renders a page depending on the calling file.         
+        It uses the global variables:
+        :php:global:`$_SERVER['PHP_SELF']`,
+        :php:global:`$_SESSION['_config']['header']`,
+        :php:global:`$_SESSION['_config']['normalhostname']`,
+        :php:global:`$_SESSION['profile']['adadmin']`,
+        :php:global:`$_SESSION['profile']['admin']`,
+        :php:global:`$_SESSION['profile']['assurer']`,
+        :php:global:`$_SESSION['profile']['dob']`,
+        :php:global:`$_SESSION['profile']['email']`,
+        :php:global:`$_SESSION['profile']['fname']`,
+        :php:global:`$_SESSION['profile']['id']`,
+        :php:global:`$_SESSION['profile']['lname']`,
+        :php:global:`$_SESSION['profile']['locadmin']`,
+        :php:global:`$_SESSION['profile']['mname']`,
+        :php:global:`$_SESSION['profile']['orgadmin']`,
+        :php:global:`$_SESSION['profile']['points']`,
+        :php:global:`$_SESSION['profile']['suff']`
 
         :param string $title: 
         :param string $title2:
@@ -132,7 +166,7 @@ Directory :file:`includes`
 
 .. sourcefile:: includes/general_stuff.php
     :uses:
-        /includes/lib/l10n.php
+        includes/lib/l10n.php
 
     This process uses 
     :php:func:`showbodycontent`,
@@ -187,40 +221,6 @@ Directory :file:`includes`
    The template defines the MySQL connection as a session variable :php:global:`$_SESSION['mconn']` while connecting to that database. It also defines the session variables
    :php:global:`$_SESSION['_config']['normalhostname']`, :php:global:`$_SESSION['_config']['securehostname']` and :php:global:`$_SESSION['_config']['tverify']`.
 
-   .. php:global:: $_SESSION['mconn']
-
-   This global variable defines the status of the database connection
-
-   * TRUE if a connection could be established
-   * FALSE otherwise
-
-   .. php:global:: $_SESSION['_config']['normalhostname']
-
-   This global variable defines the main CAcert-website
-
-   * "www.cacert.org" for production
-   * "test.cacert.org" for testing
-
-   .. php:global:: $_SESSION['_config']['securehostname']
-
-   This global variable defines the secure CAcert-website
-
-   * "secure.cacert.org" for production
-   * "       cacert.org" for testing
-
-   .. php:global:: $_SESSION['_config']['tverify']
-
-   This global variable defines TVERIFY 
-
-   * "tverify.cacert.org" for production
-   * "                  " for testing
-
-   .. todo:: checkout what TVERIFY means, check names for test-system
-
-   
-   
-   
-   
    The template defines a function :php:func:`sendmail` for sending mails.
 
    .. php:function:: sendmail($to, $subject, $message, $from, $replyto="", \
@@ -248,7 +248,7 @@ Directory :file:`includes`
 
 .. sourcefile:: includes/notary.inc.php
 
-   :file:`includes/notary.inc.php` provides a set of funktions; here listed in the given order:
+   :file:`includes/notary.inc.php` defines the global constants :php:const:`NULL_DATETIME` and :php:const:`THAWTE_REVOCATION_DATETIME`. It also provides a set of funktions; here listed in the given order:
    
     .. php:function:: query_init ($query)
 
@@ -986,7 +986,7 @@ Directory :file:`includes/lib`
         :php:func:`checkWeakKeyText`,
         :php:func:`failWithId`,
         :php:func:`runCommand`
-
+        
         :param string $csr: The CSR to be checked
         :param string [optional]  $encoding: The encoding the CSR is in (for the "-inform" parameter of OpenSSL, currently only "PEM" (default) or "DER" allowed)
         :returns: * (string) - containing the reason if the key is considered weak, empty string otherwise
@@ -1028,7 +1028,13 @@ Directory :file:`includes/lib`
 
     .. php:function:: checkDebianVulnerability($text, $keysize = 0)
 
-        Reimplement the functionality of the openssl-vulnkey tool
+        Reimplement the functionality of the openssl-vulnkey tool.
+        
+        It triggers the exeptions:
+        :php:exc:`E_USER_NOTICE`,
+        :php:exc:`E_USER_WARNING`,
+        :php:exc:`E_USER_ERROR`
+
 
         :param string $text: The text representation of a key as output by the "openssl <foo> -text -noout" commands
         :param int [optional] $keysize: If the key size is already known it can be provided so it doesn't have to be parsed again. This also skips the check whether the key is an RSA key => use wisely.
