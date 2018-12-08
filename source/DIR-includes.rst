@@ -68,40 +68,7 @@ Directory :file:`includes`
         includes/lib/l10n.php
         includes/lib/check_weak_key.php
         includes/notary.inc.php
-        includes/general.php
-        includes/account_stuff.php
-        includes/notary.inc.php
-        SOME__sanitizeHTML
-        ..         ?-check_email
-        ..         ?-make_hash
-        includes/mysql.php__sendmail
-        ..         ?-account_email_delete
-        ..         ?-checkWeakKeySPKAC
-        ..         ?-write_user_agreement
-        ..         ?-generatecertpath
-        ..         ?-checkWeakKeyCSR
-        ..         ?-waitForResult
-        ..         ?-checkEmail
-        ..         ?-account_domain_delete
-        ..         ?-clean_csr
-        ..         ?-extractit
-        ..         ?-getcn
-        ..         ?-getalt
-        ..         ?-HashAlgorithms::clean_csr
-        ..         ?-checkWeakKeyX509
-        ..         ?-unset
-        ..         ?-valid_ticket_number
-        ..         ?-write_se_log
-        ..         ?-revoke_all_private_cert
-        ..         ?-runCommand
-        ..         ?-check_client_cert_running
-        ..         ?-check_server_cert_running
-        ..        ?-check_gpg_cert_running
-        ..        ?-check_is_orgadmin
-        ..        ?-account_delete
-
-
-
+        
     .. php:function:: buildSubject(array $domains, $include_xmpp_addr = true)
 
         Build a subject string as needed by the signer

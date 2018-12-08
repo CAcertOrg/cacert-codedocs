@@ -42,6 +42,16 @@ This contains the PHP code that is the entry point to the application:
 .. sourcefile:: www/help.php
 
 .. sourcefile:: www/.htaccess
+    :uses:
+        includes/general.php
+    :links:
+        http://www.cacert.org/policy/CertificationPracticeStatement.html
+
+    The file :file:`www/.htaccess` is the file that contains some statements to control the whole process of the website. 
+    It contains a general include-statement for including :file:`ìncludes/general.php` (auto_prepend_file /www/includes/general.php). Therefor a 'include(../includes/general.php) is not needed.
+    
+    Also a permanent redirection is made from :file:`/cps.php` to <http://www.cacert.org/policy/CertificationPracticeStatement.html> (RedirectPermanent /cps.php http://www.cacert.org/policy/CertificationPracticeStatement.html).
+
 
 .. sourcefile:: www/index.php
    :uses: 
