@@ -175,13 +175,112 @@ Directory :file:`includes`
 
     .. php:function:: showbodycontent($title = "CAcert.org", $title2 = "")
 
-    
-    
-
 
 .. sourcefile:: includes/general.php
+    :uses:
+        includes/lib/general.php
+        includes/mysql.php
+        includes/lib/account.php
+        includes/lib/l10n.php
 
-    .. php:function:: loadem
+    :file:`includes/general.php` is included by the file :file:`www/.htaccess` that controls the behavior of the webserver.
+
+    Here the session is started/restarted with the name "cacert". Then the raw HTTP header is sent.
+    
+    :php:global:`$_SESSION['_config']['errmsg']` is set to empty string.
+    
+    After that, the script only continues if :php:global:`$_SERVER['HTTP_HOST']` contains one of the values from :php:global:`$_SESSION['_config']['normalhostname']`, :php:global:`$_SESSION['_config']['securehostname']`, :php:global:`$_SESSION['_config']['tverify']` or "stamp.cacert.org" and also :php:global:`$_SERVER['HTTPS']` must have the value "on".
+    
+    Next the language is organized via :php:meth:`L10n::detect_language` and :php:meth:`L10n::init_gettext`.
+    
+    Then it is checked in :ref:`users` if the user whose userid is stored in :php:global:`$_SESSION['profile']['id']` is locked, else its total points are calculated from :ref:`notary` and stored in :php:global:`$_SESSION['profile']['points']`. 
+    
+    After that executable part of the script there are some functions defined 
+
+    .. php:function:: loadem($section = "index")
+
+        Depending on the content of section an additiv file will be included.
+
+        -  "account" includes :php:global:`$_SESSION['_config']['filepath']`."/includes/account_stuff.php"
+        -  "tverify" includes :php:global:`$_SESSION['_config']['filepath']`."/includes/tverify_stuff.php"
+        -  "index" includes :php:global:`$_SESSION['_config']['filepath']`."/includes/general_stuff.php"
+        -  all other are handled like "index"
+
+        :param string $section: The section that is to handle. Allowed are 
+        
+            - "account", 
+            - "index", 
+            - "tverify"; 
+            - all other are handeled as "index".
+
+		
+    .. php:function:: includeit($id = "0", $section = "index")
+
+        ipsum
+
+    .. php:function:: checkpwlight($pwd)
+
+        ipsum
+
+    .. php:function:: checkpw($pwd, $email, $fname, $mname, $lname, $suffix)
+        
+
+
+    .. php:function:: extractit()
+        
+
+
+    .. php:function:: getcn()
+        
+
+
+    .. php:function:: getalt()
+        
+
+
+    .. php:function:: getcn2()
+        
+
+
+    .. php:function:: getalt2()
+
+    .. php:function:: checkownership($hostname)
+
+    .. php:function:: maxpoints($id = 0)
+
+    .. php:function:: gpg_hex2bin($data)
+
+    .. php:function:: signmail($to, $subject, $message, $from, $replyto = "")
+
+    .. php:function:: checkEmail($email)
+
+    .. php:function:: waitForResult($table, $certid, $id = 0, $show = 1)
+
+    .. php:function:: generateTicket()
+
+    .. php:function:: sanitizeHTML($input)
+
+    .. php:function:: make_hash()
+
+    .. php:function:: csrf_check($nam, $show=1)
+
+    .. php:function:: make_csrf($nam)
+
+    .. php:function:. clean_csr($CSR)
+
+    .. php:function:: clean_gpgcsr($CSR)
+
+    .. php:function:: sanitizeFilename($text)
+
+    .. php:function:: no_assurer_text($Status)
+
+    .. php:function:: is_assurer($userID)
+
+    .. php:function:: get_assurer_reason($userID)
+
+    .. php:function:: generatecertpath($type,$kind,$id)
+
+    .. php:function:: mysql_timed_query($sql)
 
 .. sourcefile:: includes/keygen.php
 

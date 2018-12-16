@@ -41,6 +41,18 @@ Global Variables
 
 .. php:global:: $_SERVER['HTTP_ACCEPT_LANGUAGE']
 
+.. php:global:: $_SERVER['HTTP_HOST']
+
+Contains the recent host-header from the actual request (if sent). Is set by system.
+
+This variable is used in :file:`includes/general.php`
+
+.. php:global: $_SERVER['HTTPS']
+
+Contains a non-empty value if the script is called by HTTPS. It is assumed to be the value "on".
+
+This variable is used in :file:`includes/general.php`
+
 .. php:global:: $_SERVER['PHP_SELF']
 
 
@@ -64,7 +76,11 @@ This global variable defines the status of the database connection
 
 .. php:global:: $_SESSION['_config']['errmsg']
 
+This global variable is initialized in :file:`includes/general.php` with the value ''. 
+
 .. php:global:: $_SESSION['_config']['filepath']
+
+This global variable is initialized in :file:`includes/general.php` with the value '/www'. Meant is the root direcory. 
 
 .. php:global:: $_SESSION['_config']['header']
 
@@ -72,7 +88,7 @@ This global variable defines the status of the database connection
 
 .. php:global:: $_SESSION['_config']['normalhostname']
 
-This global variable defines the main CAcert-website
+This global variable defines the main CAcert-website, it is set in :file:`/includes/mysql.php`.
 
 * "www.cacert.org" for production
 * "test.cacert.org" for testing
@@ -81,17 +97,17 @@ This global variable defines the main CAcert-website
 
 .. php:global:: $_SESSION['_config']['securehostname']
 
-This global variable defines the secure CAcert-website
+This global variable defines the secure CAcert-website, it is set in :file:`/includes/mysql.php`.
 
 * "secure.cacert.org" for production
 * "       cacert.org" for testing
 
-    .. php:global:: $_SESSION['_config']['tverify']
+.. php:global:: $_SESSION['_config']['tverify']
 
-    This global variable defines TVERIFY 
+This global variable defines TVERIFY, it is set in :file:`/includes/mysql.php`. 
 
-    * "tverify.cacert.org" for production
-    * "                  " for testing
+* "tverify.cacert.org" for production
+* "                  " for testing
 
 
 
@@ -117,6 +133,8 @@ This global variable defines the secure CAcert-website
 
 .. php:global:: $_SESSION['profile']['id']
 
+Here the internal representation of the user is stored. It is used for database accesses. 'user'
+
 .. php:global:: $_SESSION['profile']['lname']
 
 .. php:global:: $_SESSION['profile']['locadmin']
@@ -126,6 +144,8 @@ This global variable defines the secure CAcert-website
 .. php:global:: $_SESSION['profile']['orgadmin']
 
 .. php:global:: $_SESSION['profile']['points']
+
+Contains the total number of points for the user; calculated from :ref:`notary`.
 
 .. php:global:: $_SESSION['profile']['suffix']
 
