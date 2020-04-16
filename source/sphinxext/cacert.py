@@ -40,7 +40,7 @@ class SourceFileRole(roles.XRefRole):
             indexnode = addnodes.index()
             targetid = 'index-%s' % env.new_serialno('index')
             targetnode = nodes.target('', '', ids=[targetid])
-            doctitle = document.traverse(nodes.title)[0].astext()
+            doctitle = list(document.traverse(nodes.title))[0].astext()
             idxtext = "%s; %s" % (node.astext(), doctitle)
             idxtext2 = "%s; %s" % ('sourcefile', node.astext())
             indexnode['entries'] = [
