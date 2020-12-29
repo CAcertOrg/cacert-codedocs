@@ -166,6 +166,8 @@ The application should be configurable via environment variables like a proper
 .. _docker-compose: https://docs.docker.com/compose/
 .. _developer setup: https://git.dittberner.info/jan/cacert-devsetup
 
+.. _general-conclusion:
+
 Conclusions
 ===========
 

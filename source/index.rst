@@ -25,6 +25,7 @@ contribution. The canonical repository is the :cacertgit:`cacert-devel` though.
    directories
    database
    signer
+   future
    building
    glossary
 
