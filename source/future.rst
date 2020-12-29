@@ -237,6 +237,26 @@ could just use information from the client certificates issued by our CA.
 
 We could use OAuth2 or OpenID Connect for our own infrastructure too.
 
+Client certificate enrollment in browser
+----------------------------------------
+
+The ancient ``keygen`` tag is not implemented by modern browsers and needs a
+replacement to allow easy enrollment of client certificates for users that are
+not capable to use external tools. There is :bug:`1417` filed by affected
+users.
+
+There are JavaScript libraries like https://pkijs.org/ and
+https://github.com/digitalbazaar/forge that support the cryptographic
+operations.
+
+There are already two prototype implementations by Bernhard and Jan that could
+be integrated with the current or a new future web application.
+
+- Bernhard's proof of concept with a subset of pkijs
+  https://secure.convey.de/publish/ted/TestPKI.html
+- Jan's proof of concept with the forge library
+  https://git.dittberner.info/jan/browser_csr_generation
+
 Cross cutting concerns
 ======================
 
