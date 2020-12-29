@@ -4,6 +4,20 @@ Glossary
 
 .. glossary::
 
+   ACME
+     Automated Certificate Management Environment
+
+       A protocol for verifying the ownership of Internet domains and issuing
+       X.509 server certificates. Specified in :RFC:`8555`
+
+   API
+     Application programming interface
+
+   ASN.1
+     Abstract syntax notation one
+
+       See https://www.itu.int/en/ITU-T/asn1/Pages/introduction.aspx
+
    CRL
       Definition from :rfc:`5280`:
 
@@ -15,10 +29,10 @@ Glossary
         revoked certificate is identified in a CRL by its certificate serial
         number.
 
-   API
-     Application programming interface
+   IDP
+      Identity provider
 
-   ASN.1
-     Abstract syntax notation one
-
-       See https://www.itu.int/en/ITU-T/asn1/Pages/introduction.aspx
+        IDP is a term used in the description auf authentication and
+        authorization protocols. The IDP provides information related to a user.
+        The user usually has a way to approve or deny the use of his
+        information.

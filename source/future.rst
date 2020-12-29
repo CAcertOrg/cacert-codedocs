@@ -142,20 +142,68 @@ done via a configuration management system and is stored in version control too.
 It is a good practice to have the configuration repository separated from the
 code repository.
 
+.. index:: signer
+.. index:: protocol
+
 New signer protocol
 ===================
 
-Signer protocol with better binary support, strong consistency checks and
-testability
+To fix the shortcomings of the current signer protocol we need a new
+implementation with better binary support, strong consistency checks and
+testability.
+
+The new signer protocol should:
+
+- use a proper framing mechanism (i.e. `COBS`_) with a clearly recognizable
+  frame separation byte (i.e. ``0x00``)
+- have strong consistency checks (i.e. CRC32)
+- have a well understood / documented payload format (i.e. `msgpack`_)
+  with documented message types
+- have control messages for resetting the connection, requesting
+  redelivery of frames or other control functions (we should look at what
+  existing protocols like PPP do)
+- support binary payloads (DER encoded :term:`ASN.1`)
+- support UTF-8 if necessary
+- allow clients to request meta data about the signer
+
+  - supported protocol versions
+  - used CA certificates
+  - used OpenPGP keys
+  - supported certificate profiles (with some information about their
+    supported key usages and audience)
+
+- provide a way to communicate changes between signers to allow high
+  availability this will need at least
+
+  - announcement of revocations
+  - announcement of new CA certificates
+
+.. _COBS: https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing
+.. _msgpack: https://msgpack.org/
 
 .. index:: signer
 
 New signer features
 ===================
 
-Signer support for requesting CA certificates and GPG public keys used for
-  signing to allow fully automated bootstrapping of the signer client and web
-  application
+Signer support for requesting CA certificates and GPG public keys (see
+discussion in the previous section) used for signing to allow fully automated
+bootstrapping of the signer client and web application.
+
+The signer should support resigning of Sub CA certificates.
+
+Email handling
+==============
+
+All email functionality should properly quote message headers and construct
+proper MIME messages. This is relevant for both the signer_client and web
+application(s).
+
+We should not implement email handling ourselves. If we decide to use
+`Go`_ we should look at the `Gomail`_ package.
+
+.. _Go: https://golang.org
+.. _Gomail: https://pkg.go.dev/gopkg.in/gomail.v2
 
 New web application features
 ============================
@@ -163,8 +211,31 @@ New web application features
 ACME support
 ------------
 
+The :term:`ACME` protocol has been standardized in :RFC:`8555` and allows
+automated issuing of server certificates. We should provide this functionality
+and document its usage with existing ACME client software.
+
 Identity provider
 -----------------
+
+Our users provide us with identity information and our community verifies this
+information. We already allow to use client certificates issued by our CA to
+give users a way to authenticate using there CAcert verified user attributes.
+
+We could also provide our users a way to use their information in modern web
+authentication / authorization protocols like `OAuth 2`_ and `OpenID Connect`_.
+We would need to implement the necessary endpoints for authentication,
+authorization, user information retrieval and probably client registration.
+We will also need a user interface to revoke access tokens granted to
+applications.
+
+.. _OAuth 2: https://oauth.net/2/
+.. _OpenID Connect: https://openid.net/connect/
+
+A rudimentary version of an :term:`IDP` could be implemented separately and
+could just use information from the client certificates issued by our CA.
+
+We could use OAuth2 or OpenID Connect for our own infrastructure too.
 
 Cross cutting concerns
 ======================
@@ -174,7 +245,17 @@ Cross cutting concerns
 Automated tests
 ---------------
 
-automated tests for critical functionality
+All critical functionality should be covered by automated tests. This requires
+the code to be testable by using modern software development techniques like
+dependency injection. We need to have automated tests for at least the
+following:
+
+- signer protocol
+- user registration
+- verification of domains
+- verification of email addresses
+- assurance point calculation
+- ...
 
 .. index:: logging
 
