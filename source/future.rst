@@ -29,11 +29,10 @@ Proper ASN.1 handling
 =====================
 
 Current PKI standards like :rfc:`5280` or the `CAB forum's baseline requirements`_
-mandate the integrity of the `ASN.1`_ objects in certificates. These standards
+mandate the integrity of the :term:`ASN.1` objects in certificates. These standards
 move towards UTF8String representation of names and have some strict validation
 rules that can only be implemented by handling ASN.1 directly.
 
-.. _ASN.1: https://www.itu.int/en/ITU-T/asn1/Pages/introduction.aspx
 .. _CAB forum's baseline requirements: https://cabforum.org/baseline-requirements/
 
 Implications
@@ -51,8 +50,8 @@ Cleaner separation between components
 Separation of components improves the maintainability and reduces hard
 dependencies between parts of the system. Each data store (filesystem, database
 or message bus) should only belong to one component. All other components should
-access required data by using :term:`API`s provided by the application that
-owns the data store.
+access required data by using :term:`APIs <API>` provided by the application
+that owns the data store.
 
 Implications
 ------------
@@ -181,3 +180,16 @@ automated tests for critical functionality
 
 Consistent logging
 ------------------
+
+Our applications should log in a consistent format so that logs can be aggregated
+this is especially important with distributed applications.
+
+Log information should consist of at least the following information
+
+- Timestamp (same timezone on all machines, ideally UTC)
+- Log level (the level definition should be consistent)
+- Source of the log (code file / module and if possible line)
+- Error code (if an error occurred)
+- Request identifier
+- Message
+- Traceback / stacktrace in case of unhandled errors
