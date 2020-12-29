@@ -5,8 +5,8 @@
 Global Variables
 ================
 
-    As the modules this website includes have to communicate together there are some global variables defined as arrays
-
+As the modules this website includes have to communicate together there are some global
+variables defined as arrays.
 
 .. index:: $_REQUEST
 
@@ -60,6 +60,11 @@ This variable is used in :file:`includes/general.php`
 
 :php:global:`$_SESSION`
 ========================
+
+.. note::
+   The web application uses the session to store global variables. It might be a better
+   idea to use real variables or constants. The session is user related and should only
+   store the minimum information to make information available across request boundaries.
 
 .. php:global:: $_SESSION['mconn']
 

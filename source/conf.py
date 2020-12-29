@@ -38,7 +38,7 @@ except requests.exceptions.SSLError as err:
 # -- Project information -----------------------------------------------------
 
 project = 'CAcert code documentation'
-copyright = '2018, CAcert development team'
+copyright = '2018-2020 CAcert development team'
 author = 'CAcert development team'
 
 # The short X.Y version
