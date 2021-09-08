@@ -207,8 +207,9 @@ Etc
 	`DVD copy`_.  Note that while the NetInst version is
 	less than 300 MB, there are three DVD images, totalling about 13 GB!  On the other hand, the NetInst version depends on a working
 	Debian Mirror, while the CD or DVD images might be able to be installed without that requirement.  We might want to experiment.
-.. [#f3] I did try downloading the DVD image for Debian 6, Squeeze, and created a Virtual Box VM using that.  It was 4.2 GB, so took a 
-	while to download.  I only downloaded DVD-1, instead of the whole set, and, in fact the DVD named debian-update-6.0.10-amd64-DVD-1.iso.
+.. [#f3] I did try downloading the DVD image for Debian 6, Squeeze, and created a Virtual Box VM using that.  Each disk image was 4.4 GB, so took a 
+	while to download.  I needed to download both DVD-1 and DVD-2, because of missing software, the DVDs 
+	named debian-6.0.10-amd64-DVD-1.iso and debian-6.0.10-amd64-DVD-2.iso.
 	Further information about creating the Debian 6.10 VM can be found in `DevTest 6`_.
 .. [#f4] Note that the source for Debian CD and DVD images older that the current version is `Debian Archive`_. The NetInst
 	version can be found in the iso-cd directory.
