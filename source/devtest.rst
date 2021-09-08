@@ -59,8 +59,8 @@ Pre-requisites
 * VirtualBox [#f1]_
     - Remember that the OS of the host system does not have to match the OS of the virtual machine.
 * ISO of Debian 7 or older, if possible. [#f2]_ [#f4]_
-    - I was not able to install Debian 7 from a NetInst ISO, because of its repository requirement. [#f3]_
-	However, I was able to do so from the Debian 7 DVD ISO, and that is what I describe here.
+    - I was not able to install Debian 7 from a NetInst ISO, because of its repository requirement. [#f3]_  
+      However, I was able to do so from the Debian 7 DVD ISO, and that is what I describe here.
 * Membership in the CAcert Development group and Mailing List: cacert-devel@lists.cacert.org.
 * Access to our Bug Tracker `Mantis`_.
 
