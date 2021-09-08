@@ -92,10 +92,18 @@ Since CAcert's current production systems are running on ten-year-old versions o
 Debian, for any bug fixing or enhancements to the current system, we need to try
 and reproduce that environment as much as possible.
 
-For that reason, I am specifying Debian 8, Jessie, as our standard Development
-Environment, since it is the oldest still supported version of Debian.  If absolutely 
-necessary, we could experiment by downloading older CD versions of Debian, but for
-now, let us use Jessie.
+For that reason, I am specifying 
+Debian 7, Stretch, as our standard Development Environment, even though
+Debian 8, Jessie, is the oldest still supported version of Debian.  
+
+During experimentation, I found that Debian 6 could not be used after
+installation, since a critical part of our environment, *git* from that
+version of Debian, will not work with GitHUB or other parts of our
+ecosystem.
+
+I also found that PHP 5 is still standard in Debian 7, where it is
+not in Debian 8, but has been replaced with PHP 7.
+
 
 Creating our Development and Test Platform
 ++++++++++++++++++++++++++++++++++++++++++
@@ -116,7 +124,7 @@ First Installation Steps
 
 * Aptitude
     - I prefer the command line version of aptitude to apt-get, so install it on every machine that I build.
-    - Once it has been installed, do:
+    - It comes pre-installed in Debian 7, so do:
         + aptitude update
         + aptitude safe-upgrade
     - And then install the following tools with "aptitude install vim git rsync"
@@ -147,7 +155,7 @@ MySQL 5 is a normal part of Debian 7, so does not require any special effort to 
 
 * Installing MySQL
     - aptitude update
-    - aptitude install mysql-5.5-server mysql-client
+    - aptitude install mysql-server-5.5 mysql-client
 
 
 Installing Mail and MailHog
@@ -169,33 +177,64 @@ Apache
 ++++++
 
 * Editing Virtual Host
+    - cd
+    - cd tools
+    - wget setenv.conf
+       + vim setenv.conf
+       + *Some of the values in this file need to be set for your environment, others can be left*
+    - cd /etc/apache2/sites-available
+    - sudo vim default
+    - *duplicate the /var/www/html Directory block*
+    - *change /var/www/html in one of them to your cacert directory followed by: cacert-devel/www*
+    - Set the Document Root to that same directory, like: /home/<your ID>/cacert/cacert-devel/www
+    - Read the file *setenv.conf* from your tools directory into a blank space in *default* between
+      the *<VirtualHost* and *</VirtualHost* lines.
 
-Installing Required Environment Variables
-_________________________________________
-
-* Deciding on values
-* Editing Apache Virtual Host
 
 Editing PHP.ini
 _______________
+
+* For the moment, we will not edit the *php.ini* file
 
 
 Installing Test Manager
 +++++++++++++++++++++++
 
+* cd
+* cd cacert
+* git clone https://github.com/CAcertOrg/cacert-testmgr.git
+
 
 Installing Source Code
 ++++++++++++++++++++++
+
+Note that these instructions describe checking out a generic, read-only
+copy of the master *cacert-devel* repository from GitHUB.  In most cases,
+Developers will be working from Forks of this repository under their own
+names in GitHUB, and will have created appropriate *bug-<number>* branches
+related to their work.
+
+* cd
+* cd cacert
+* git clone https://github.com/CAcertOrg/cacert-devel.git
+* git checkout <desired working branch>
 
 
 Any More Steps
 ++++++++++++++
 
-Starting Development
---------------------
+At this point, you now should have a working VM ready to start work.
+
+
+Starting a Development Session
+------------------------------
 
 Starting MailHog
 ++++++++++++++++
+
+The first step in any development session is to start MailHog running, 
+since Exim4 and Apache will start when the VM start.
+
 
 Etc
 ---
