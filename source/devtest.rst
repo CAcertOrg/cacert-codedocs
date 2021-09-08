@@ -37,7 +37,7 @@ purposes.
 
 For future code development, much of this instruction can be repeated, with
 principally, replacement of the Debian ISO and, therefore, upgrade of the
-database server within.
+database server and PHP version within.
 
 
 Software Development and Code Submission in CAcert
@@ -58,8 +58,8 @@ Pre-requisites
       into our virtual machine.
 * VirtualBox [#f1]_
     - Remember that the OS of the host system does not have to match the OS of the virtual machine.
-* ISO of Debian 8 or older, if possible. [#f2]_ [#f4]_
-    - I was not able to install Debian 7, because of its repository requirement. [#f3]_
+* ISO of Debian 7 or older, if possible. [#f2]_ [#f4]_
+    - I was not able to install Debian 7 from a NetInst ISO, because of its repository requirement. [#f3]_
 * Membership in the CAcert Development group and Mailing List: cacert-devel@lists.cacert.org.
 * Access to our Bug Tracker `Mantis`_.
 
@@ -123,27 +123,30 @@ First Installation Steps
 * Git
 * Rsync
 * Others?
-* Create a working directory
-    - mkdir work
+* Create a useful directory
+    - mkdir tools
 * Create a source directory
     - mkdir cacert
 
 
-Installing PHP 5.7
+Installing PHP 5
 ++++++++++++++++++
 
-* Add Sources.list file
-    - Since PHP 5 is not normally provided by Debian 8, we need to make use of a repository provided by Ondrej Sury.
-	He has been creating and supporting various versions of PHP ( and a few other related packages ) for Debian
-	and Ubuntu for quite a few years.  These currently range from PHP 5.6 through the whole PHP 7.x range.
-    - Perform the following steps:
-        + cd work
-        + sudo apt install ca-certificates apt-transport-https 
-        + wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
-        + sudo echo "deb https://packages.sury.org/php/ jessie main" | tee /etc/apt/sources.list.d/php.list
+PHP 5 is a normal part of Debian 7, so does not require any special effort to install.
+
 * Installing PHP
     - aptitude update
-    - aptitude install php5.6 php5.6-cli php5.6-common php5.6-curl php5.6-mbstring php5.6-mysqlnd php5.6-xml
+    - aptitude install php5 php5-mysql
+
+
+Installing MySQL 5
+++++++++++++++++++
+
+MySQL 5 is a normal part of Debian 7, so does not require any special effort to install.
+
+* Installing MySQL
+    - aptitude update
+    - aptitude install mysql-5.5-server mysql-client
 
 
 Installing Mail and MailHog
@@ -202,15 +205,15 @@ Etc
 .. [#f1] VirtualBox can be obtained either from a Linux distribution repository
 	or directly from `VirtualBox`_.
 .. [#f2] You can download Debian ISOs from `Debian`_, but finding older ones, such
-	as the one that we want, can be a bit tricky.  I use the `NetInst version`_
+	as the one that we want, can be a bit tricky.  I would normally use the `NetInst version`_
 	because it is much smaller, and therefore quicker to download, but might be a bit longer to install than a full
 	`DVD copy`_.  Note that while the NetInst version is
-	less than 300 MB, there are three DVD images, totalling about 13 GB!  On the other hand, the NetInst version depends on a working
-	Debian Mirror, while the CD or DVD images might be able to be installed without that requirement.  We might want to experiment.
+	less than 300 MB, there are three DVD images, totalling about 13 GB!  However, only the first DVD is required for most
+	purposes.  Since the NetInst version requires a working Debian Mirror, while the DVD does not, for anything older than
+	Debian 8, only the DVD ISO will work successfully.
 .. [#f3] I did try downloading the DVD image for Debian 6, Squeeze, and created a Virtual Box VM using that.  Each disk image was 4.4 GB, so took a 
-	while to download.  I needed to download both DVD-1 and DVD-2, because of missing software, the DVDs 
-	named debian-6.0.10-amd64-DVD-1.iso and debian-6.0.10-amd64-DVD-2.iso.
-	Further information about creating the Debian 6.10 VM can be found in `DevTest 6`_.
+	while to download.  I only needed to download DVD-1 for the install, named debian-6.0.10-amd64-DVD-1.iso.
+	However, after I created the Debian 6 version, I discovered that the *git* in that version would not work with GitHUB.
 .. [#f4] Note that the source for Debian CD and DVD images older that the current version is `Debian Archive`_. The NetInst
 	version can be found in the iso-cd directory.
 
@@ -222,5 +225,4 @@ Etc
 .. _DVD copy:  https://cdimage.debian.org/cdimage/archive/8.11.1/amd64/iso-dvd/
 .. _Contributing: https://github.com/jandd/cacert-devel/blob/contribution-guide/CONTRIBUTING.md
 .. _Debian Archive: http://cdimage.debian.org/cdimage/archive/
-.. _DevTest 6: other-doc
 
