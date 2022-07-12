@@ -1,3 +1,7 @@
+This repository has been archived. Mirroring using the old mechanism (ssh push from
+git.cacert.org) is broken. The repository will probably move to
+https://code.cacert.org/cacert/cacert-codedocs
+
 CAcert code documentation repository
 ====================================
 
@@ -14,8 +18,7 @@ Contributing
 ------------
 
 Instructions on how to work on the documentation are available at
-https://codedocs.cacert.org/building.html or
-https://github.com/CAcertOrg/cacert-codedocs/blob/master/source/building.rst
+https://codedocs.cacert.org/building.html
 
 License
 -------
